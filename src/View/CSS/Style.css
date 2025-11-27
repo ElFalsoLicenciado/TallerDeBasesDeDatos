@@ -59,3 +59,23 @@
     -fx-text-fill: #6F4E37; /* El color "Coffee" del botón normal */
     -fx-underline: true;    /* Opcional: una línea debajo */
 }
+
+.boton-sidebar {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-alignment: BASELINE_LEFT; /* Mantiene el icono a la izquierda */
+    -fx-padding: 10px 20px;       /* Aumenté un poco el padding izquierdo */
+    -fx-cursor: hand;
+
+    /* --- LA SOLUCIÓN A LOS PUNTOS --- */
+    -fx-text-overrun: clip;      /* Corta el texto tajantemente */
+    -fx-ellipsis-string: "";     /* Reemplaza los "..." por nada */
+}
+
+.boton-sidebar:hover {
+    -fx-background-color: #4A332A; /* Un café un poco más claro (Leche) */
+    -fx-scale-x: 1.02;             /* Crece un poquito */
+    -fx-scale-y: 1.02;
+}

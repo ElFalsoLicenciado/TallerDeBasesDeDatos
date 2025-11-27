@@ -1,43 +1,74 @@
-LuasPlace/
-├── .idea/                      // (Automático) Configuración de IntelliJ
-├── out/                        // (Automático) Donde IntelliJ guarda los .class compilados
-└── src/
-    ├── Main.java               // Tu clase principal (extiende Application)
-    │
-    ├── Controller/             // [C] Controladores: Conectan la vista con el modelo
-    │   ├── LoginController.java
-    │   ├── MenuController.java
-    │   ├── VentasController.java
+src/
+├── Main.java                       // Punto de entrada (Lanza el Login)
+│
+├── Controller/                     // Lógica de la UI
+│   ├── LoginController.java        // Ya existe
+│   ├── MainLayoutController.java   // Ya existe
+│   ├── SidebarController.java      // Ya existe
+│   │
+│   ├── Ventas/
+│   │   ├── POSController.java      // Pantalla de cobro
+│   │   ├── ClientesController.java // CRUD Clientes
+│   │   └── HistorialController.java
+│   │
+│   ├── Inventario/
+│   │   ├── StockController.java    // Tabla de existencias (Vista Inventario)
+│   │   ├── ComprasController.java  // Registro de compras a proveedores
+│   │   └── InsumosController.java  // CRUD Ingredientes
+│   │
+│   ├── Produccion/                 // *Nuevo (Sugerido por la DB)*
+│   │   ├── RecetasController.java
+│   │   └── OrdenesProduccionController.java
+│   │
+│   └── RH/
+│       ├── EmpleadosController.java
+│       └── UsuariosController.java
+│
+├── Model/                          // Lógica de Negocio
+│   ├── DatabaseConnection.java     // Singleton conexión JDBC
+│   │
+│   ├── DAO/                        // Acceso a Datos (SQL puro)
+│   │   ├── UsuarioDAO.java
+│   │   ├── VentaDAO.java           // Inserta en ventas y detalles_ventas
+│   │   ├── ProductoDAO.java        // Lee vista_productos_margen
+│   │   ├── InventarioDAO.java      // Maneja movimientos_inventario
+│   │   ├── EmpleadoDAO.java
+│   │   └── ProduccionDAO.java      // Maneja lotes y recetas
+│   │
+│   ├── Entities/                   // POJOs (Reflejo de tablas)
+│   │   ├── Usuario.java
+│   │   ├── Venta.java
+│   │   ├── Producto.java
+│   │   ├── Ingrediente.java
+│   │   ├── Receta.java
+│   │   └── ... (resto de tablas)
+│   │
+│   └── Enums/                      // Enums de PostgreSQL mapeados
+│       ├── TipoProducto.java
+│       ├── EstadoLote.java
+│       ├── MetodoPago.java
+│       └── RolUsuario.java
+│
+├── Util/                           // Herramientas
+│   ├── SessionManager.java         // Singleton de sesión actual
+│   ├── Navigation.java             // Gestor de cambios de vista
+│   ├── SecurityUtils.java          // Hashing de passwords
+│   └── PDFGenerator.java           // Para tickets/reportes
+│
+└── View/                           // Archivos FXML y Assets
+    ├── CSS/
+    │   ├── Style.css
+    │   └── Login.css
+    ├── Images/
     │   └── ...
-    │
-    ├── Model/                  // [M] Modelo: Lógica de negocio y Base de Datos
-    │   ├── DatabaseConnection.java  // Singleton para conectar a la BD (DriverManager)
-    │   │
-    │   ├── Entities/           // "Moldes" de tus tablas (POJOs)
-    │   │   ├── Usuario.java
-    │   │   ├── Producto.java
-    │   │   └── Venta.java
-    │   │
-    │   └── DAO/                // Objetos de Acceso a Datos (Aquí va el SQL)
-    │       ├── UsuarioDAO.java      // Métodos: validarLogin(), crearUsuario()
-    │       ├── InventarioDAO.java   // Métodos: obtenerStock(), actualizarCantidad()
-    │       └── VentaDAO.java        // Métodos: registrarVenta()
-    │
-    └── View/                   // [V] Vista: Archivos visuales
-        ├── CSS/
-        │   ├── estilos.css
-        │   └── login.css
-        │
-        ├── Images/
-        │   └── logo.png
-        │
-        ├── Login.fxml
-        ├── MenuPrincipal.fxml
-        └── PantallaVentas.fxml
-
-GENERADO POR GEMINI
-
-------------------------------------------------------------------------------------------
+    ├── Login.fxml
+    ├── MainLayout.fxml
+    ├── Sidebar.fxml
+    ├── Ventas/
+    │   └── POS.fxml
+    ├── Inventario/
+    │   └── Stock.fxml
+    └── ... (resto de vistas)
 
 - Uso de arquitectura MVC
 - Clases DAO (data access objets)

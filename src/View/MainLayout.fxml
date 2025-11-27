@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane fx:id="mainContainer" prefHeight="720.0" prefWidth="1080.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.MainLayoutController">
+
+    <left>
+        <fx:include source="Sidebar.fxml"/>
+    </left>
+
+    <center>
+        <StackPane style="-fx-background-color: #ECF0F1;">
+            <children>
+                <Label text="Bienvenido al Sistema" style="-fx-font-size: 24px; -fx-text-fill: #6F4E37;"/>
+            </children>
+        </StackPane>
+    </center>
+
+</BorderPane>
