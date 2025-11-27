@@ -1,0 +1,44 @@
+LuasPlace/
+├── .idea/                      // (Automático) Configuración de IntelliJ
+├── out/                        // (Automático) Donde IntelliJ guarda los .class compilados
+└── src/
+    ├── Main.java               // Tu clase principal (extiende Application)
+    │
+    ├── Controller/             // [C] Controladores: Conectan la vista con el modelo
+    │   ├── LoginController.java
+    │   ├── MenuController.java
+    │   ├── VentasController.java
+    │   └── ...
+    │
+    ├── Model/                  // [M] Modelo: Lógica de negocio y Base de Datos
+    │   ├── DatabaseConnection.java  // Singleton para conectar a la BD (DriverManager)
+    │   │
+    │   ├── Entities/           // "Moldes" de tus tablas (POJOs)
+    │   │   ├── Usuario.java
+    │   │   ├── Producto.java
+    │   │   └── Venta.java
+    │   │
+    │   └── DAO/                // Objetos de Acceso a Datos (Aquí va el SQL)
+    │       ├── UsuarioDAO.java      // Métodos: validarLogin(), crearUsuario()
+    │       ├── InventarioDAO.java   // Métodos: obtenerStock(), actualizarCantidad()
+    │       └── VentaDAO.java        // Métodos: registrarVenta()
+    │
+    └── View/                   // [V] Vista: Archivos visuales
+        ├── CSS/
+        │   ├── estilos.css
+        │   └── login.css
+        │
+        ├── Images/
+        │   └── logo.png
+        │
+        ├── Login.fxml
+        ├── MenuPrincipal.fxml
+        └── PantallaVentas.fxml
+
+GENERADO POR GEMINI
+
+------------------------------------------------------------------------------------------
+
+- Uso de arquitectura MVC
+- Clases DAO (data access objets)
+- Dentro de Model también irán clases ENUM que deberán ser iguales a los ENUM de la base de datos

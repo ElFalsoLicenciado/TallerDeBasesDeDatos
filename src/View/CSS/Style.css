@@ -1,0 +1,61 @@
+/* Estilo base para el botón principal */
+.boton-cafeteria {
+    -fx-background-color: #6F4E37; /* Color Café "Coffee" */
+    -fx-text-fill: white;           /* Texto blanco */
+    -fx-background-radius: 30px;    /* Bordes MUY redondos (tipo pastilla) */
+    -fx-border-radius: 30px;        /* Asegura que el borde siga la curva */
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;               /* Manita al pasar el mouse */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2); /* Sombra suave */
+}
+
+/* Efecto cuando pasas el mouse por encima (Hover) */
+.boton-cafeteria:hover {
+    -fx-background-color: #8B5E3C; /* Un café un poco más claro (Leche) */
+    -fx-scale-x: 1.02;             /* Crece un poquito */
+    -fx-scale-y: 1.02;
+}
+
+/* Efecto cuando haces clic (Pressed) */
+.boton-cafeteria:pressed {
+    -fx-background-color: #4A332A; /* Café muy oscuro (Espresso) */
+    -fx-effect: none;              /* Quita la sombra para que parezca hundido */
+    -fx-translate-y: 1;            /* Se mueve 1 pixel abajo */
+}
+
+/* Estilo base para TextField y PasswordField */
+.campo-cafeteria {
+    -fx-background-color: #FEFDF5;  /* Un crema muy suave (leche) */
+    -fx-border-color: #DCC7AA;      /* Borde color "café con leche" claro */
+    -fx-border-width: 1.5px;
+    -fx-background-radius: 20px;    /* Bordes redondeados */
+    -fx-border-radius: 20px;
+    -fx-padding: 8px 15px;          /* Espacio interno para que el texto no pegue al borde */
+    -fx-text-fill: #4A332A;         /* Texto color café oscuro (Espresso) */
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-prompt-text-fill: #A68B7C;  /* El texto de ayuda en un tono suave */
+}
+
+/* Efecto cuando seleccionas el campo (Focus) */
+.campo-cafeteria:focused {
+    -fx-border-color: #6F4E37;      /* El borde cambia al color del botón principal */
+    -fx-background-color: #FFFFFF;  /* El fondo se vuelve blanco puro para resaltar */
+    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.2), 8, 0, 0, 0); /* Un resplandor café suave */
+}
+
+/* Efecto cuando pasas el mouse por encima (Hover) */
+.campo-cafeteria:hover {
+    -fx-background-color: #FFF;     /* Se aclara ligeramente */
+    -fx-border-color: #B09B87;      /* El borde se oscurece un poco */
+}
+
+.titulo-cafeteria {
+    -fx-font-family: "Playfair Display", serif;
+    -fx-font-size: 42px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6F4E37; /* El color "Coffee" del botón normal */
+    -fx-underline: true;    /* Opcional: una línea debajo */
+}
