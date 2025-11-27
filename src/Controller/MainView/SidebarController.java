@@ -100,7 +100,10 @@ public class SidebarController {
     }
 
     @FXML public void irAVentas() { Navigation.cambiarVista("/View/Ventas/PantallaVentas.fxml"); }
-    @FXML public void irAInventario() { /* ... */ }
+    @FXML
+    public void irAInventario() {
+        Util.Navigation.cambiarVista("/View/Inventario/PantallaInventario.fxml");
+    }
     @FXML public void irARH() { /* ... */ }
     @FXML void irAHome() { Util.Navigation.cambiarVista("/View/Home.fxml"); }
 
@@ -109,8 +112,7 @@ public class SidebarController {
             SessionManager.getInstance().logout();
             Stage stageActual = (Stage) sidebar.getScene().getWindow();
             stageActual.close();
-            // Asegúrate que la ruta sea correcta
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LogIn.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LogIn/LogIn.fxml"));
             Parent root = loader.load();
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));

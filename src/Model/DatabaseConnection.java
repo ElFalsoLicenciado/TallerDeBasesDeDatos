@@ -24,11 +24,11 @@ public class DatabaseConnection {
             return DriverManager.getConnection(URL, USER, PASSWORD);
 
         } catch (ClassNotFoundException e) {
-            System.err.println("❌ ERROR CRÍTICO: Driver de PostgreSQL no encontrado.");
+            System.err.println("ERROR CRÍTICO: Driver de PostgreSQL no encontrado.");
             e.printStackTrace();
             return null;
         } catch (SQLException e) {
-            System.err.println("❌ ERROR CONEXIÓN: No se pudo conectar a la BD.");
+            System.err.println("ERROR CONEXIÓN: No se pudo conectar a la BD.");
             e.printStackTrace();
             return null;
         }

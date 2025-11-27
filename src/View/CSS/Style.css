@@ -86,3 +86,23 @@
     -fx-border-color: #E74C3C;     /* Borde rojo claro */
     -fx-text-fill: white;
 }
+/* --- Estados del Inventario (Filas de Tabla) --- */
+
+.fila-agotado {
+    -fx-background-color: #ffcccc; /* Rojo claro */
+    -fx-text-background-color: #cc0000;
+}
+
+.fila-critico {
+    -fx-background-color: #ffe6cc; /* Naranja claro */
+    -fx-text-background-color: #cc6600;
+}
+
+.fila-bajo {
+    -fx-background-color: #ffffcc; /* Amarillo claro */
+    -fx-text-background-color: #999900;
+}
+
+.fila-adecuado {
+    /* No ponemos color para que use el por defecto (blanco/gris) */
+}

@@ -741,3 +741,12 @@ INSERT INTO clientes (rfc, nombre, apellido, correo, telefono, direccion) VALUES
 ('MORA800808H45', 'Carlos', 'Morales', 'charly@hotmail.com', '4439998877', 'Ventura Puente');
 
 UPDATE usuarios SET contrasena = '$2a$10$xQEZqvLhSJjqeY3R6P3o2.rMVZ3j3Y8lKqHhCQpZnMcxEzD1t5Kz2';
+
+INSERT INTO roles_permisos (id_rol, id_permiso)
+SELECT r.id, p.id
+FROM roles r, permisos p
+WHERE r.nombre = 'Gerente Sucursal' AND p.codigo = 'ventas.crear';
+
+UPDATE empleados
+SET id_sucursal = 1
+WHERE correo = 'maria.garcia@luasplace.com';
