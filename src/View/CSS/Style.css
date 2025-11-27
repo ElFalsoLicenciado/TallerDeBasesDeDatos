@@ -79,3 +79,10 @@
     -fx-scale-x: 1.02;             /* Crece un poquito */
     -fx-scale-y: 1.02;
 }
+
+/* Estilo específico para el botón de LogOut (por ID) */
+#btnLogout:hover {
+    -fx-background-color: #C0392B; /* Rojo intenso */
+    -fx-border-color: #E74C3C;     /* Borde rojo claro */
+    -fx-text-fill: white;
+}

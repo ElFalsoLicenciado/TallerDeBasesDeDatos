@@ -24,7 +24,6 @@ public class SidebarController {
     @FXML
     public void initialize() {
         // 1. Configuracion Inicial
-        // IMPORTANTE: Desbloquear el ancho máximo para permitir la expansión
         sidebar.setPrefWidth(ANCHO_CONTRAIDO);
         sidebar.setMinWidth(ANCHO_CONTRAIDO);
         sidebar.setMaxWidth(ANCHO_CONTRAIDO); // Empezamos bloqueados en pequeño
@@ -47,8 +46,6 @@ public class SidebarController {
     @FXML
     public void contraerSidebar() {
         ejecutarAnimacion(ANCHO_CONTRAIDO);
-        // (Opcional) Podríamos volver a bloquear el MaxWidth al terminar,
-        // pero con la animación de prefWidth es suficiente visualmente.
     }
 
     private void ejecutarAnimacion(double anchoObjetivo) {
@@ -59,9 +56,7 @@ public class SidebarController {
 
         animacion = new Timeline();
 
-        // Usamos EASE_BOTH para que se sienta suave (acelera y frena)
         KeyValue valorAncho = new KeyValue(sidebar.prefWidthProperty(), anchoObjetivo, Interpolator.EASE_BOTH);
-        // También animamos el minWidth para evitar "saltos" si el layout padre intenta comprimirlo
         KeyValue valorMinAncho = new KeyValue(sidebar.minWidthProperty(), anchoObjetivo, Interpolator.EASE_BOTH);
 
         KeyFrame frame = new KeyFrame(DURACION, valorAncho, valorMinAncho);
@@ -73,9 +68,32 @@ public class SidebarController {
     // --- Métodos de Navegación ---
     @FXML public void irAVentas() {
         System.out.println("Navegando a Ventas...");
-        // Navigation.cambiarVista("/View/Ventas/PantallaVentas.fxml");
+        Navigation.cambiarVista("/View/Ventas.fxml");
     }
 
     @FXML public void irAInventario() { System.out.println("Navegando a Inventario..."); }
     @FXML public void irARH() { System.out.println("Navegando a RH..."); }
+
+    @FXML
+    public void cerrarSesion() {
+        try {
+            // 1. Limpiar sesión en memoria
+            Util.SessionManager.getInstance().logout();
+
+            // 2. Cerrar ventana actual
+            javafx.stage.Stage stageActual = (javafx.stage.Stage) sidebar.getScene().getWindow();
+            stageActual.close();
+
+            // 3. Abrir Login de nuevo (Usando tu clase Main o cargando el FXML)
+            // Forma rápida:
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/View/LogIn.fxml"));
+            javafx.scene.Parent root = loader.load();
+            javafx.stage.Stage loginStage = new javafx.stage.Stage();
+            loginStage.setScene(new javafx.scene.Scene(root));
+            loginStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

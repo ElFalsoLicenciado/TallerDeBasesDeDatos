@@ -56,20 +56,21 @@ src/
 │   └── PDFGenerator.java           // Para tickets/reportes
 │
 └── View/                           // Archivos FXML y Assets
-    ├── CSS/
-    │   ├── Style.css
-    │   └── Login.css
-    ├── Images/
-    │   └── ...
-    ├── Login.fxml
-    ├── MainLayout.fxml
-    ├── Sidebar.fxml
-    ├── Ventas/
-    │   └── POS.fxml
-    ├── Inventario/
-    │   └── Stock.fxml
-    └── ... (resto de vistas)
+├── CSS/
+│   ├── Style.css
+│   └── Login.css
+├── Images/
+│   └── ...
+├── Login.fxml
+├── MainLayout.fxml
+├── Sidebar.fxml
+├── Ventas/
+│   └── POS.fxml
+├── Inventario/
+│   └── Stock.fxml
+└── ... (resto de vistas)
 
 - Uso de arquitectura MVC
 - Clases DAO (data access objets)
 - Dentro de Model también irán clases ENUM que deberán ser iguales a los ENUM de la base de datos
+

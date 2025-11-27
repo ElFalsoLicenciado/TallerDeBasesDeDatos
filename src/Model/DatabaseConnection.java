@@ -11,17 +11,22 @@ public class DatabaseConnection {
     public static Connection getConnection() {
         if (connection == null) {
             try {
-                // Datos de tu script SQL
+                Class.forName("org.postgresql.Driver");
                 String url = "jdbc:postgresql://localhost:5432/luas_place";
-                String user = "postgres";
-                String password = "password";
+                String user = "postgres"; // Asegúrate que este sea tu usuario real
+                String password = "password"; // <--- PON TU CONTRASEÑA AQUÍ
 
                 connection = DriverManager.getConnection(url, user, password);
-                System.out.println("Conexión exitosa a Lua's Place");
+                System.out.println("✅ Conexión exitosa a la base de datos.");
 
-            } catch (SQLException e) {
+            } catch (ClassNotFoundException e) {
+                // Esto pasa si no agregaste el JAR a las librerías de IntelliJ
+                System.err.println("ERROR: No se encontró el Driver de PostgreSQL. Verifica las librerías.");
                 e.printStackTrace();
-                System.out.println("Error conectando a la base de datos");
+            } catch (SQLException e) {
+                // Esto pasa si la URL, usuario o contraseña están mal
+                System.err.println("ERROR: Falló la conexión SQL.");
+                e.printStackTrace();
             }
         }
         return connection;

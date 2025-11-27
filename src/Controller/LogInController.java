@@ -1,9 +1,13 @@
 package Controller;
 
+import Model.DAO.UsuarioDAO;
+import Model.Entities.Usuario;
+import Util.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -27,21 +31,39 @@ public class LogInController {
 
         passField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                continueButton.requestFocus();
                 continueButton.fire();
             }
         });
     }
 
+    /**
+     * Este método debe estar asociado al onAction del botón en el FXML.
+     */
     public void continuePressed() {
-        System.out.println("Usuario: " + userField.getText() + "\n" + "Contraseña: " + passField.getText());
-        // 1. Validar credenciales (simulado o con tu DAO)
-        boolean loginExitoso = true; // Suponiendo que validaste user/pass
+        String usuarioTexto = userField.getText().trim();
+        String passTexto = passField.getText();
 
-        if (loginExitoso) {
-            abrirVentanaPrincipal();
+        // 1. Validar campos vacíos
+        if (usuarioTexto.isEmpty() || passTexto.isEmpty()) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor ingresa usuario y contraseña.");
+            return;
         }
 
+        // 2. Llamar al DAO para verificar en la Base de Datos
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario usuarioEncontrado = dao.login(usuarioTexto, passTexto);
+
+        if (usuarioEncontrado != null) {
+            // 3. Éxito: Guardar en sesión
+            SessionManager.getInstance().login(usuarioEncontrado);
+            System.out.println("Login exitoso para: " + usuarioEncontrado.getUsuario());
+
+            // 4. Cambiar a la ventana principal
+            abrirVentanaPrincipal();
+        } else {
+            // 5. Fallo: Credenciales incorrectas
+            mostrarAlerta(Alert.AlertType.ERROR, "Acceso Denegado", "Usuario o contraseña incorrectos.");
+        }
     }
 
     private void abrirVentanaPrincipal() {
@@ -56,9 +78,6 @@ public class LogInController {
             // C. Configurar la nueva escena
             Scene scene = new Scene(root);
 
-            // Opcional: Cargar CSS global si lo tienes
-            // scene.getStylesheets().add(getClass().getResource("/View/CSS/Style.css").toExternalForm());
-
             // D. Cambiar la escena y centrar la ventana
             stage.setScene(scene);
             stage.setTitle("Lua's Place - Sistema de Gestión");
@@ -67,7 +86,16 @@ public class LogInController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error al cargar la ventana principal.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Error Crítico", "No se pudo cargar el sistema principal.\n" + e.getMessage());
         }
+    }
+
+    // Método helper para mostrar alertas fácilmente
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
