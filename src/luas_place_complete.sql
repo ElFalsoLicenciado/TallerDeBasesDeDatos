@@ -739,3 +739,5 @@ INSERT INTO clientes (rfc, nombre, apellido, correo, telefono, direccion) VALUES
 ('LOPM880315AB9', 'Patricia', 'López Morales', 'patricia.lopez@email.com', '4433334445', 'Calle Aquiles Serdán, Centro'),
 ('HEVA950505ZZ1', 'Verónica', 'Hernández', 'vero.hdez@email.com', '4431239876', 'Paseo Altozano'),
 ('MORA800808H45', 'Carlos', 'Morales', 'charly@hotmail.com', '4439998877', 'Ventura Puente');
+
+UPDATE usuarios SET contrasena = '$2a$10$xQEZqvLhSJjqeY3R6P3o2.rMVZ3j3Y8lKqHhCQpZnMcxEzD1t5Kz2';
