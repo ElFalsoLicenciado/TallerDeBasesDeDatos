@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane style="-fx-background-color: white;"
+           xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+    <VBox alignment="CENTER" spacing="20.0">
+        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="/View/Images/icon.png" />
+            </image>
+        </ImageView>
+
+        <Label text="Bienvenido a Lua's Place" textFill="#6f4e37">
+            <font>
+                <Font name="Playfair Display Bold" size="36.0" />
+            </font>
+        </Label>
+
+        <Label text="Seleccione una opción del menú para comenzar" textFill="#7f8c8d">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+    </VBox>
+
+</StackPane>

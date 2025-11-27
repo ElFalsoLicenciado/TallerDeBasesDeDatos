@@ -6,29 +6,31 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static Connection connection = null;
+    // Datos de conexión
+    private static final String URL = "jdbc:postgresql://localhost:5432/luas_place";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "admin"; // O tu contraseña real
 
+    /**
+     * Obtiene una NUEVA conexión a la base de datos.
+     * Es responsabilidad del que llama cerrar esta conexión (usando try-with-resources).
+     */
     public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                Class.forName("org.postgresql.Driver");
-                String url = "jdbc:postgresql://localhost:5432/luas_place";
-                String user = "postgres"; // Asegúrate que este sea tu usuario real
-                String password = "password"; // <--- PON TU CONTRASEÑA AQUÍ
+        try {
+            // Cargar driver explícitamente para evitar problemas
+            Class.forName("org.postgresql.Driver");
 
-                connection = DriverManager.getConnection(url, user, password);
-                System.out.println("✅ Conexión exitosa a la base de datos.");
+            // SIEMPRE devuelve una nueva conexión
+            return DriverManager.getConnection(URL, USER, PASSWORD);
 
-            } catch (ClassNotFoundException e) {
-                // Esto pasa si no agregaste el JAR a las librerías de IntelliJ
-                System.err.println("ERROR: No se encontró el Driver de PostgreSQL. Verifica las librerías.");
-                e.printStackTrace();
-            } catch (SQLException e) {
-                // Esto pasa si la URL, usuario o contraseña están mal
-                System.err.println("ERROR: Falló la conexión SQL.");
-                e.printStackTrace();
-            }
+        } catch (ClassNotFoundException e) {
+            System.err.println("❌ ERROR CRÍTICO: Driver de PostgreSQL no encontrado.");
+            e.printStackTrace();
+            return null;
+        } catch (SQLException e) {
+            System.err.println("❌ ERROR CONEXIÓN: No se pudo conectar a la BD.");
+            e.printStackTrace();
+            return null;
         }
-        return connection;
     }
 }

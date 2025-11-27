@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="439.0" prefWidth="547.0" stylesheets="@CSS/Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LogInController">
+<AnchorPane prefHeight="439.0" prefWidth="547.0" stylesheets="@../CSS/Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LogIn.LogInController">
    <children>
       <Label alignment="CENTER" layoutX="166.0" layoutY="78.0" styleClass="titulo-cafeteria" text="Lua's Place" textAlignment="CENTER">
          <font>
