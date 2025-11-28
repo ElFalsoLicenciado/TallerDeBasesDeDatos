@@ -6,6 +6,7 @@ import Model.DAO.VentaDAO;
 import Model.Entities.Cliente;
 import Model.Entities.Producto;
 import Model.Entities.Usuario;
+import Util.AlertUtils;
 import Util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -140,11 +141,7 @@ public class POSController {
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
+        AlertUtils.mostrar(Alert.AlertType.ERROR, titulo, mensaje);
     }
 
     public static class RenglonCarrito {

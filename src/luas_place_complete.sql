@@ -740,7 +740,7 @@ INSERT INTO clientes (rfc, nombre, apellido, correo, telefono, direccion) VALUES
 ('HEVA950505ZZ1', 'Verónica', 'Hernández', 'vero.hdez@email.com', '4431239876', 'Paseo Altozano'),
 ('MORA800808H45', 'Carlos', 'Morales', 'charly@hotmail.com', '4439998877', 'Ventura Puente');
 
-UPDATE usuarios SET contrasena = '$2a$10$xQEZqvLhSJjqeY3R6P3o2.rMVZ3j3Y8lKqHhCQpZnMcxEzD1t5Kz2';
+UPDATE usuarios SET contrasena = 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f';
 
 INSERT INTO roles_permisos (id_rol, id_permiso)
 SELECT r.id, p.id

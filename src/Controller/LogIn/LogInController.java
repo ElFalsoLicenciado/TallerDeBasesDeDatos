@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Set; // <--- Importante
+import Util.AlertUtils;
 
 public class LogInController {
     @FXML Button continueButton;
@@ -43,7 +44,7 @@ public class LogInController {
 
         // 1. Validar campos vacíos
         if (usuarioTexto.isEmpty() || passTexto.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos vacíos", "Por favor ingresa usuario y contraseña.");
+            AlertUtils.mostrar(Alert.AlertType.WARNING, "Campos vacíos", "Por favor ingresa usuario y contraseña.");
             return;
         }
 
@@ -67,7 +68,7 @@ public class LogInController {
             abrirVentanaPrincipal();
 
         } else {
-            mostrarAlerta(Alert.AlertType.ERROR, "Acceso Denegado", "Usuario o contraseña incorrectos.");
+            AlertUtils.mostrar(Alert.AlertType.ERROR, "Acceso Denegado", "Usuario o contraseña incorrectos.");
         }
     }
 
@@ -86,15 +87,7 @@ public class LogInController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta(Alert.AlertType.ERROR, "Error Crítico", "No se pudo cargar el sistema principal.\n" + e.getMessage());
+            AlertUtils.mostrar(Alert.AlertType.ERROR, "Error Crítico", "No se pudo cargar el sistema principal.\n" + e.getMessage());
         }
-    }
-
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
     }
 }

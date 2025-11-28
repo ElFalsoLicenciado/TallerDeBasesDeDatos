@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.RH.RHFormularioController"
+            stylesheets="/View/CSS/Style.css"
+            styleClass="fondo-latte">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <padding><Insets top="20" left="20" bottom="10"/></padding>
+            <Button text="← Cancelar" onAction="#cancelar" styleClass="boton-latte"/>
+            <Label fx:id="lblTitulo" text="Datos del Empleado" styleClass="titulo-frappe"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <padding><Insets top="10" left="30" right="30" bottom="20"/></padding>
+
+            <GridPane hgap="30.0" vgap="20.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+                </columnConstraints>
+
+                <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Nombres" styleClass="label-formulario"/>
+                    <TextField fx:id="txtNombres" promptText="Ej. Juan Carlos" styleClass="campo-cafeteria"/>
+                </VBox>
+
+                <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="Apellidos" styleClass="label-formulario"/>
+                    <TextField fx:id="txtApellidos" promptText="Ej. Pérez López" styleClass="campo-cafeteria"/>
+                </VBox>
+
+                <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="Fecha de Nacimiento" styleClass="label-formulario"/>
+                    <DatePicker fx:id="dpFechaNac" maxWidth="Infinity" promptText="dd/mm/aaaa" styleClass="campo-cafeteria"/>
+                </VBox>
+
+                <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label text="Lugar de Nacimiento" styleClass="label-formulario"/>
+                    <TextField fx:id="txtLugarNac" promptText="Ciudad, Estado" styleClass="campo-cafeteria"/>
+                </VBox>
+
+                <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label text="Teléfono" styleClass="label-formulario"/>
+                    <TextField fx:id="txtTelefono" promptText="10 dígitos" styleClass="campo-cafeteria"/>
+                </VBox>
+
+                <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Label text="Correo Electrónico" styleClass="label-formulario"/>
+                    <TextField fx:id="txtCorreo" promptText="correo@ejemplo.com" styleClass="campo-cafeteria"/>
+                </VBox>
+
+                <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2">
+                    <Label text="Dirección Completa" styleClass="label-formulario"/>
+                    <TextField fx:id="txtDireccion" promptText="Calle, Número, Colonia, Código Postal" styleClass="campo-cafeteria"/>
+                </VBox>
+
+                <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                    <Label text="Puesto / Cargo" styleClass="label-formulario"/>
+                    <ComboBox fx:id="cmbTipo" maxWidth="Infinity" promptText="Seleccione puesto..." styleClass="campo-cafeteria"/>
+                </VBox>
+
+                <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <Label text="Sucursal Asignada" styleClass="label-formulario"/>
+                    <ComboBox fx:id="cmbSucursal" maxWidth="Infinity" promptText="Seleccione sucursal..." styleClass="campo-cafeteria"/>
+                </VBox>
+
+            </GridPane>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox spacing="15.0" alignment="CENTER_RIGHT">
+            <padding><Insets right="30" bottom="20" top="10"/></padding>
+
+            <Button fx:id="btnBaja" text="Dar de Baja" onAction="#darDeBaja"
+                    styleClass="boton-frappe" style="-fx-background-color: #C0392B;" visible="false"/>
+
+            <Button fx:id="btnCredenciales" text="Gestionar Usuario" onAction="#abrirCredenciales"
+                    styleClass="boton-latte" style="-fx-background-color: #3498DB;" visible="false"/>
+
+            <Button text="Guardar Registro" onAction="#guardar"
+                    styleClass="boton-latte" style="-fx-background-color: #27AE60;" prefWidth="180" prefHeight="40">
+                <font><Font name="System Bold" size="14.0" /></font>
+            </Button>
+        </HBox>
+    </bottom>
+
+</BorderPane>

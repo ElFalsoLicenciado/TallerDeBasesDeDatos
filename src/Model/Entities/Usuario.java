@@ -2,12 +2,13 @@ package Model.Entities;
 
 public class Usuario {
     private int id;
+    private int idEmpleado; // <--- CAMPO AÑADIDO
     private String usuario;
     private String contrasena;
-    private String nombreCompleto; // Nuevo campo
+    private String nombreCompleto;
     private int idRol;
     private boolean activo;
-    private int idSucursal; // NUEVO CAMPO
+    private int idSucursal;
 
     public Usuario() {}
 
@@ -17,9 +18,15 @@ public class Usuario {
         this.idRol = idRol;
     }
 
-    // Getters y Setters
+    // --- Getters y Setters ---
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+
+    // --- MÉTODOS AÑADIDOS PARA SOLUCIONAR EL ERROR ---
+    public int getIdEmpleado() { return idEmpleado; }
+    public void setIdEmpleado(int idEmpleado) { this.idEmpleado = idEmpleado; }
+    // ------------------------------------------------
 
     public String getUsuario() { return usuario; }
     public void setUsuario(String usuario) { this.usuario = usuario; }
@@ -28,7 +35,7 @@ public class Usuario {
     public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
     public String getNombreCompleto() { return nombreCompleto; }
-    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }// Guardará el hash, aunque no lo usaremos mucho en la UI
+    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }
 
     public int getIdRol() { return idRol; }
     public void setIdRol(int idRol) { this.idRol = idRol; }

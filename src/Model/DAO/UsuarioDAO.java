@@ -4,12 +4,13 @@ import Model.DatabaseConnection;
 import Model.Entities.Usuario;
 import Util.HashPassword;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashSet; // <--- Importante
 import java.util.Set;     // <--- Importante
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UsuarioDAO {
 
@@ -76,5 +77,89 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
         return permisos;
+    }
+
+    /**
+     * Busca si existe un usuario asignado a un empleado específico.
+     */
+    public Usuario buscarPorIdEmpleado(int idEmpleado) {
+        String sql = "SELECT * FROM usuarios WHERE id_empleado = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idEmpleado);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Usuario u = new Usuario();
+                u.setId(rs.getInt("id"));
+                u.setUsuario(rs.getString("usuario"));
+                u.setIdRol(rs.getInt("id_rol"));
+                u.setIdEmpleado(rs.getInt("id_empleado")); // Asegúrate de tener este setter en Entidad Usuario
+                u.setActivo(rs.getBoolean("activo"));
+                return u;
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return null;
+    }
+
+    /**
+     * Crea o actualiza un usuario de sistema.
+     */
+    public boolean guardarUsuarioSistema(Usuario u, boolean esNuevo, String passwordSinHash) {
+        String sql;
+        if (esNuevo) {
+            sql = "INSERT INTO usuarios (id_empleado, usuario, contrasena, id_rol, activo) VALUES (?, ?, ?, ?, ?)";
+        } else {
+            // Si el password viene vacío/null, no lo actualizamos
+            if (passwordSinHash == null || passwordSinHash.isEmpty()) {
+                sql = "UPDATE usuarios SET usuario=?, id_rol=?, activo=? WHERE id=?";
+            } else {
+                sql = "UPDATE usuarios SET usuario=?, id_rol=?, activo=?, contrasena=? WHERE id=?";
+            }
+        }
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            if (esNuevo) {
+                pstmt.setInt(1, u.getIdEmpleado());
+                pstmt.setString(2, u.getUsuario());
+                // Hashear contraseña nueva
+                pstmt.setString(3, Util.HashPassword.hashString(passwordSinHash));
+                pstmt.setInt(4, u.getIdRol());
+                pstmt.setBoolean(5, u.isActivo());
+            } else {
+                // Update
+                pstmt.setString(1, u.getUsuario());
+                pstmt.setInt(2, u.getIdRol());
+                pstmt.setBoolean(3, u.isActivo());
+
+                if (passwordSinHash != null && !passwordSinHash.isEmpty()) {
+                    pstmt.setString(4, Util.HashPassword.hashString(passwordSinHash));
+                    pstmt.setInt(5, u.getId());
+                } else {
+                    pstmt.setInt(4, u.getId());
+                }
+            }
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Obtiene los roles disponibles para llenar el ComboBox.
+     */
+    public Map<Integer, String> obtenerRoles() {
+        Map<Integer, String> roles = new HashMap<>();
+        String sql = "SELECT id, nombre FROM roles WHERE activo = TRUE";
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                roles.put(rs.getInt("id"), rs.getString("nombre"));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return roles;
     }
 }

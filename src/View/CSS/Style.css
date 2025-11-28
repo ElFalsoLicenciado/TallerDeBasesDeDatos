@@ -106,3 +106,93 @@
 .fila-adecuado {
     /* No ponemos color para que use el por defecto (blanco/gris) */
 }
+/* --- Paleta Latte & Frappe --- */
+
+.fondo-latte {
+    -fx-background-color: #FFF8E7; /* Crema suave */
+}
+
+.titulo-frappe {
+    -fx-text-fill: #6F4E37; /* Café clásico */
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.boton-latte {
+    -fx-background-color: #C69C6D; /* Caramelo */
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);
+}
+
+.boton-latte:hover {
+    -fx-background-color: #B08555; /* Caramelo oscuro */
+}
+
+.boton-frappe { /* Para acciones principales o peligrosas */
+    -fx-background-color: #8B5E3C; /* Mocha */
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-cursor: hand;
+}
+
+.lista-latte .list-cell {
+    -fx-background-color: #FFF8E7;
+    -fx-text-fill: #4A332A;
+    -fx-padding: 10px;
+}
+.lista-latte .list-cell:filled:selected {
+    -fx-background-color: #DCC7AA; /* Selección color leche con café */
+    -fx-text-fill: #4A332A;
+}
+/* Etiqueta estilo formulario (Spotify style) */
+.label-formulario {
+    -fx-text-fill: #6F4E37; /* Café oscuro para contraste */
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 0 0 2 0; /* Un pequeño espacio abajo */
+}
+
+/* --- ESTILOS PARA ALERTAS (DialogPane) --- */
+
+.dialog-pane {
+    -fx-background-color: #FFF8E7; /* Fondo Latte */
+    -fx-border-color: #6F4E37;     /* Borde Café */
+    -fx-border-width: 2px;
+}
+
+/* El área del contenido del texto */
+.dialog-pane > .content.label {
+    -fx-text-fill: #4A332A; /* Texto Espresso */
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
+    -fx-padding: 20px;
+}
+
+/* El encabezado (Header) */
+.dialog-pane:header .header-panel {
+    -fx-background-color: #DCC7AA; /* Color Leche con Café */
+    -fx-padding: 10px;
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-text-fill: #6F4E37; /* Título Café */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Botones dentro de la alerta */
+.dialog-pane .button {
+    -fx-background-color: #C69C6D; /* Caramelo */
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #B08555;
+}
