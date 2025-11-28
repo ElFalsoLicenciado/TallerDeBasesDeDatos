@@ -37,9 +37,7 @@
             text="   Inicio">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="/View/Images/home.png" />
-                </image>
+                <image> <Image url="/View/Images/home.png" /> </image>
             </ImageView>
         </graphic>
     </Button>
@@ -58,6 +56,19 @@
         </graphic>
     </Button>
 
+    <Button fx:id="btnCompras" mnemonicParsing="false" onAction="#irACompras"
+            maxWidth="1.7976931348623157E308"
+            prefHeight="50.0"
+            styleClass="boton-sidebar"
+            text="   Compras">
+        <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="/View/Images/compras.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
     <Button fx:id="btnInventario" mnemonicParsing="false" onAction="#irAInventario"
             maxWidth="1.7976931348623157E308"
             prefHeight="50.0"

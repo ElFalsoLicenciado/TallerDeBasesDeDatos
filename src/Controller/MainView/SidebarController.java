@@ -22,6 +22,7 @@ public class SidebarController {
 
     // --- NUEVO: Necesitas inyectar los botones para poder deshabilitarlos ---
     @FXML private Button btnVentas;
+    @FXML private Button btnCompras;
     @FXML private Button btnInventario;
     @FXML private Button btnRH;
     // -----------------------------------------------------------------------
@@ -100,12 +101,9 @@ public class SidebarController {
     }
 
     @FXML public void irAVentas() { Navigation.cambiarVista("/View/Ventas/PantallaVentas.fxml"); }
-    @FXML public void irAInventario() {
-        Util.Navigation.cambiarVista("/View/Inventario/PantallaInventario.fxml");
-    }
-    @FXML public void irARH() {
-        Util.Navigation.cambiarVista("/View/RH/RH_Menu.fxml");
-    }
+    @FXML public void irACompras() { Util.Navigation.cambiarVista("/View/Compras/PantallaCompras.fxml"); }
+    @FXML public void irAInventario() { Util.Navigation.cambiarVista("/View/Inventario/PantallaInventario.fxml"); }
+    @FXML public void irARH() { Util.Navigation.cambiarVista("/View/RH/RH_Menu.fxml"); }
     @FXML void irAHome() { Util.Navigation.cambiarVista("/View/Home.fxml"); }
 
     @FXML public void cerrarSesion() {
