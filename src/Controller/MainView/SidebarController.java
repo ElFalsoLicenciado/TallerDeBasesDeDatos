@@ -56,27 +56,40 @@ public class SidebarController {
         aplicarSeguridad();
     }
 
+    // ... (imports y campos)
+
     private void aplicarSeguridad() {
         SessionManager sesion = SessionManager.getInstance();
 
-        // Si el botón es null, significa que no tiene fx:id en el FXML
-        // Verifica Sidebar.fxml si esto da NullPointerException
-
+        // 1. VENTAS
         if (btnVentas != null && !sesion.tienePermiso("ventas.crear")) {
-            btnVentas.setDisable(true);
-            btnVentas.setOpacity(0.5);
+            ocultarBoton(btnVentas);
         }
 
+        // 2. INVENTARIO
         if (btnInventario != null && !sesion.tienePermiso("inventario.ajustar")
                 && !sesion.tienePermiso("inventario.merma")) {
-            btnInventario.setDisable(true);
-            btnInventario.setOpacity(0.5);
+            ocultarBoton(btnInventario);
         }
 
-        if (btnRH != null && !sesion.tienePermiso("usuarios.ver")) {
-            btnRH.setDisable(true);
-            btnRH.setOpacity(0.5);
+        // 3. COMPRAS
+        // Asumiendo que el permiso sea 'inventario.ajustar' o uno nuevo 'compras.crear'
+        if (btnCompras != null && !sesion.tienePermiso("inventario.ajustar")) {
+            ocultarBoton(btnCompras);
         }
+
+        // 4. RH
+        if (btnRH != null && !sesion.tienePermiso("usuarios.ver")) {
+            ocultarBoton(btnRH);
+        }
+    }
+
+    /**
+     * Método auxiliar para desaparecer completamente un botón.
+     */
+    private void ocultarBoton(javafx.scene.control.Button btn) {
+        btn.setVisible(false); // Lo hace invisible
+        btn.setManaged(false); // Hace que el VBox no le reserve espacio
     }
 
     // ... (Métodos de animación y navegación siguen igual) ...
