@@ -260,3 +260,34 @@
 .table-view .scroll-bar:horizontal .thumb {
     -fx-background-color: #DCC7AA;     /* Café con leche */
 }
+
+/* --- TARJETAS DE INVENTARIO (GRID) --- */
+
+.producto-card {
+    -fx-background-color: #FEFDF5; /* Crema */
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #DCC7AA;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-padding: 15;
+    -fx-alignment: TOP-CENTER;
+    -fx-spacing: 5;
+}
+
+.producto-card:hover {
+    -fx-border-color: #C69C6D; /* Caramelo al pasar el mouse */
+    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.3), 8, 0, 0, 3);
+}
+
+.texto-cantidad {
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4A332A;
+}
+
+/* Colores para el texto de cantidad según estado */
+.stock-critico { -fx-text-fill: #C0392B; } /* Rojo */
+.stock-bajo { -fx-text-fill: #fd7c27; }    /* Naranja */
+.stock-ok { -fx-text-fill: #27AE60; }      /* Verde */
