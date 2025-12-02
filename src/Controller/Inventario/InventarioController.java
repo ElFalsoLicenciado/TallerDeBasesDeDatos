@@ -5,16 +5,16 @@ import Model.DAO.RecetaDAO;
 import Model.Entities.InventarioItem;
 import Model.Entities.Usuario;
 import Util.SessionManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 import java.io.InputStream;
 import java.util.List;
@@ -22,61 +22,106 @@ import java.util.List;
 public class InventarioController {
 
     @FXML private FlowPane gridProductos;
+    @FXML private ScrollPane viewProductos;
+
+    @FXML private TableView<InventarioItem> tablaInsumos;
+    @FXML private TableColumn<InventarioItem, String> colCodigo;
+    @FXML private TableColumn<InventarioItem, String> colNombre;
+    @FXML private TableColumn<InventarioItem, Double> colCosto;
+    @FXML private TableColumn<InventarioItem, Integer> colStock;
+    @FXML private TableColumn<InventarioItem, String> colEstado;
+
+    @FXML private Label lblTituloInv;
+    @FXML private ToggleButton tglProductos;
 
     @FXML
     public void initialize() {
+        // Configurar columnas de la tabla de Insumos
+        colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("producto")); // Usa el getter getProducto()
+        colCosto.setCellValueFactory(new PropertyValueFactory<>("precio"));    // Usa el getter getPrecio() (costo)
+        colStock.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+        // Configurar los colores de alerta
+        configurarColoresFilas();
+
+        // Cargar datos iniciales
         cargarInventario();
     }
 
     @FXML
+    public void cambiarVista() {
+        if (tglProductos.isSelected()) {
+            // Mostrar Productos (Grid)
+            viewProductos.setVisible(true);
+            tablaInsumos.setVisible(false);
+            lblTituloInv.setText("Inventario de Productos");
+        } else {
+            // Mostrar Insumos (Tabla)
+            viewProductos.setVisible(false);
+            tablaInsumos.setVisible(true);
+            lblTituloInv.setText("Inventario de Materia Prima");
+        }
+        cargarInventario(); // Recargar datos
+    }
+
+    @FXML
     public void cargarInventario() {
-        gridProductos.getChildren().clear(); // Limpiar grid anterior
+        InventarioDAO dao = new InventarioDAO();
 
-        Usuario usuario = SessionManager.getInstance().getUsuarioActual();
-        if (usuario != null) {
-            InventarioDAO dao = new InventarioDAO();
-            List<InventarioItem> items = dao.obtenerInventarioPorSucursal(usuario.getIdSucursal());
+        if (tglProductos.isSelected()) {
+            // --- CARGA DE PRODUCTOS (GRID) ---
+            gridProductos.getChildren().clear();
+            Usuario usuario = SessionManager.getInstance().getUsuarioActual();
 
-            // Crear tarjeta por cada producto
-            for (InventarioItem item : items) {
-                // Solo mostramos productos (tipo pan, bebida, postre), no ingredientes sueltos
-                if (!item.getTipo().equals("Ingrediente")) {
-                    gridProductos.getChildren().add(crearTarjetaProducto(item));
+            if (usuario != null) {
+                // Obtener inventario específico de la sucursal del usuario
+                List<InventarioItem> items = dao.obtenerInventarioPorSucursal(usuario.getIdSucursal());
+
+                for (InventarioItem item : items) {
+                    // Filtrar solo productos (no ingredientes sueltos)
+                    // Asumimos que los productos tienen foto o son de tipo específico
+                    if (!item.getTipo().equals("Ingrediente")) {
+                        gridProductos.getChildren().add(crearTarjetaProducto(item));
+                    }
                 }
             }
+        } else {
+            // --- CARGA DE INSUMOS (TABLA) ---
+            List<InventarioItem> insumos = dao.obtenerIngredientesGlobales();
+            tablaInsumos.getItems().setAll(insumos);
         }
     }
 
+    // --- MÉTODOS VISUALES ---
+
     private VBox crearTarjetaProducto(InventarioItem item) {
-        // 1. Contenedor de la Tarjeta
         VBox card = new VBox();
-        card.setPrefSize(200, 280); // Tamaño fijo
+        card.setPrefSize(200, 280);
         card.getStyleClass().add("producto-card");
 
-        // 2. Imagen
+        // Imagen
         ImageView imgView = new ImageView();
         imgView.setFitHeight(120);
         imgView.setFitWidth(120);
         imgView.setPreserveRatio(true);
 
-        // Intentar cargar imagen específica, si no usar default
         String imagePath = "/View/Images/" + item.getCodigo() + ".png";
         InputStream is = getClass().getResourceAsStream(imagePath);
         if (is == null) {
-            is = getClass().getResourceAsStream("/View/Images/default.png"); // IMAGEN POR DEFECTO
+            is = getClass().getResourceAsStream("/View/Images/default.png");
         }
         if (is != null) imgView.setImage(new Image(is));
 
-        // 3. Nombre
+        // Etiquetas
         Label lblNombre = new Label(item.getProducto());
         lblNombre.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-alignment: CENTER;");
         lblNombre.setWrapText(true);
 
-        // 4. Cantidad y Estado
         Label lblStock = new Label(item.getCantidad() + " unidades");
         lblStock.getStyleClass().add("texto-cantidad");
 
-        // Colores según estado
         switch (item.getEstado()) {
             case "AGOTADO": lblStock.getStyleClass().add("stock-critico"); break;
             case "CRÍTICO": lblStock.getStyleClass().add("stock-critico"); break;
@@ -84,32 +129,27 @@ public class InventarioController {
             default:        lblStock.getStyleClass().add("stock-ok"); break;
         }
 
-        // 5. Botón Ver Receta
+        // Botón Receta
         Button btnReceta = new Button("Ver Receta");
         btnReceta.getStyleClass().add("boton-latte");
         btnReceta.setStyle("-fx-font-size: 12px; -fx-padding: 5 15;");
         btnReceta.setOnAction(e -> mostrarReceta(item));
 
-        // Espaciador para empujar botón abajo
         Region spacer = new Region();
         VBox.setVgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
 
-        // Armar tarjeta
         card.getChildren().addAll(imgView, lblNombre, lblStock, spacer, btnReceta);
         return card;
     }
 
     private void mostrarReceta(InventarioItem item) {
-        // Ejecutar en hilo de fondo si la consulta es pesada, pero aquí es rápida
         RecetaDAO recetaDao = new RecetaDAO();
         String contenidoReceta = recetaDao.obtenerRecetaPorProducto(item.getCodigo());
 
-        // Usamos un Alert personalizado con TextArea para mostrar la receta
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Receta: " + item.getProducto());
         alert.setHeaderText(null);
 
-        // Usar TextArea para que el texto largo se lea bien
         TextArea textArea = new TextArea(contenidoReceta);
         textArea.setEditable(false);
         textArea.setWrapText(true);
@@ -119,7 +159,6 @@ public class InventarioController {
         alert.getDialogPane().setContent(textArea);
         alert.getDialogPane().setPrefSize(400, 400);
 
-        // Inyectar CSS global
         try {
             alert.getDialogPane().getStylesheets().add(
                     getClass().getResource("/View/CSS/Style.css").toExternalForm()
@@ -128,5 +167,35 @@ public class InventarioController {
         } catch (Exception ignored) {}
 
         alert.showAndWait();
+    }
+
+    private void configurarColoresFilas() {
+        tablaInsumos.setRowFactory(tv -> new TableRow<InventarioItem>() {
+            @Override
+            protected void updateItem(InventarioItem item, boolean empty) {
+                super.updateItem(item, empty);
+
+                getStyleClass().removeAll("fila-agotado", "fila-critico", "fila-bajo", "fila-adecuado");
+
+                if (item == null || empty) {
+                    return;
+                }
+
+                switch (item.getEstado()) {
+                    case "AGOTADO":
+                        getStyleClass().add("fila-agotado");
+                        break;
+                    case "CRÍTICO":
+                        getStyleClass().add("fila-critico");
+                        break;
+                    case "BAJO":
+                        getStyleClass().add("fila-bajo");
+                        break;
+                    default:
+                        getStyleClass().add("fila-adecuado");
+                        break;
+                }
+            }
+        });
     }
 }

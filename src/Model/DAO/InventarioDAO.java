@@ -39,4 +39,41 @@ public class InventarioDAO {
         }
         return lista;
     }
+
+    /**
+     * Obtiene la lista de ingredientes globales para mostrar en la tabla unificada.
+     */
+    public List<InventarioItem> obtenerIngredientesGlobales() {
+        List<InventarioItem> lista = new ArrayList<>();
+        String sql = "SELECT codigo, nombre, 'Ingrediente' as tipo, costo_unitario, cantidad_disponible, cantidad_minima " +
+                "FROM ingredientes WHERE activo = TRUE ORDER BY cantidad_disponible ASC";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                double stock = rs.getDouble("cantidad_disponible");
+                double min = rs.getDouble("cantidad_minima");
+
+                // Calcular estado manualmente para ingredientes
+                String estado;
+                if (stock <= 0) estado = "AGOTADO";
+                else if (stock <= min) estado = "CRÍTICO";
+                else if (stock <= min * 2) estado = "BAJO";
+                else estado = "ADECUADO";
+
+                lista.add(new InventarioItem(
+                        rs.getString("codigo"),
+                        rs.getString("nombre"),
+                        "Materia Prima", // Tipo
+                        rs.getDouble("costo_unitario"), // Usamos costo como precio visual
+                        (int) stock, // Casteo a int para visualización simple
+                        (int) min,
+                        estado
+                ));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return lista;
+    }
 }
