@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class RHFormularioController {
 
-    // --- VARIABLE ESTÁTICA PARA PASAR DATOS ENTRE VISTAS ---
     private static Empleado empleadoAEditar;
     public static void setEmpleadoAEditar(Empleado e) { empleadoAEditar = e; }
     // -------------------------------------------------------
@@ -94,20 +93,14 @@ public class RHFormularioController {
 
         // 4. Guardar en Base de Datos
         if (dao.guardar(e)) {
-            // --- ACTUALIZACIÓN DE ESTADO CRÍTICA ---
-            // Una vez guardado (y generado el ID si era nuevo), actualizamos la variable estática
-            // para que la vista se comporte como "Modo Edición" a partir de ahora.
             empleadoAEditar = e;
 
-            // Actualizamos UI para reflejar que ya existe
             btnCredenciales.setVisible(true);
-            lblTitulo.setText("Editar Empleado: " + e.getCodigo()); // El código se generó en BD
+            lblTitulo.setText("Editar Empleado: " + e.getCodigo());
 
             if (esNuevo) {
-                // Caso Nuevo: Flujo especial para crear credenciales
                 mostrarConfirmacionCrearUsuario(e);
             } else {
-                // Caso Edición: Notificación simple
                 mostrarAlerta("Éxito", "Información actualizada correctamente.");
             }
         } else {
@@ -117,8 +110,6 @@ public class RHFormularioController {
 
     @FXML
     public void abrirCredenciales() {
-        // Gracias a que actualizamos 'empleadoAEditar' en el método guardar(),
-        // aquí ya tenemos el objeto con ID válido, sea nuevo o existente.
         Empleado target = empleadoAEditar;
 
         // Validación de seguridad

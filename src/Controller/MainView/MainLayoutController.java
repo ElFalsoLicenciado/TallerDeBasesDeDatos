@@ -30,8 +30,6 @@ public class MainLayoutController {
 
         iniciarTimerInactividad();
 
-        // --- SOLUCIÓN AL DOBLE LOGIN (Matar el timer al cerrar ventana) ---
-        // Esperamos a que el BorderPane sea parte de una Escena y una Ventana
         mainContainer.sceneProperty().addListener((obsScene, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
@@ -51,7 +49,7 @@ public class MainLayoutController {
 
     private void iniciarTimerInactividad() {
         // 90 segundos = 1.5 minutos
-        timerInactividad = new PauseTransition(Duration.seconds(3));
+        timerInactividad = new PauseTransition(Duration.seconds(90));
         timerInactividad.setOnFinished(event -> cerrarSesionPorTimeout());
 
         mainContainer.addEventFilter(InputEvent.ANY, event -> reiniciarTimer());

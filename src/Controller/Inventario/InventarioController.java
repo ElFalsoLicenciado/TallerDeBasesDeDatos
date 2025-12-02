@@ -4,11 +4,8 @@ import Model.DAO.InventarioDAO;
 import Model.DAO.RecetaDAO;
 import Model.Entities.InventarioItem;
 import Model.Entities.Usuario;
-import Util.AlertUtils;
 import Util.SessionManager;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,7 +40,6 @@ public class InventarioController {
             // Crear tarjeta por cada producto
             for (InventarioItem item : items) {
                 // Solo mostramos productos (tipo pan, bebida, postre), no ingredientes sueltos
-                // Opcional: Filtro en Java o en SQL
                 if (!item.getTipo().equals("Ingrediente")) {
                     gridProductos.getChildren().add(crearTarjetaProducto(item));
                 }
@@ -63,7 +59,7 @@ public class InventarioController {
         imgView.setFitWidth(120);
         imgView.setPreserveRatio(true);
 
-        // Intentar cargar imagen específica, sino usar default
+        // Intentar cargar imagen específica, si no usar default
         String imagePath = "/View/Images/" + item.getCodigo() + ".png";
         InputStream is = getClass().getResourceAsStream(imagePath);
         if (is == null) {
@@ -120,8 +116,6 @@ public class InventarioController {
         textArea.setMaxWidth(Double.MAX_VALUE);
         textArea.setMaxHeight(Double.MAX_VALUE);
 
-        // Estilizar el diálogo usando tu utilidad (si quieres)
-        // O hacerlo manual aquí para el TextArea
         alert.getDialogPane().setContent(textArea);
         alert.getDialogPane().setPrefSize(400, 400);
 

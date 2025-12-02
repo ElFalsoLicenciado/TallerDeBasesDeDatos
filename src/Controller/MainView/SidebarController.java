@@ -20,7 +20,6 @@ public class SidebarController {
     @FXML private VBox sidebar;
     @FXML private Label lblUsuario;
 
-    // --- NUEVO: Necesitas inyectar los botones para poder deshabilitarlos ---
     @FXML private Button btnVentas;
     @FXML private Button btnCompras;
     @FXML private Button btnInventario;
@@ -47,16 +46,11 @@ public class SidebarController {
         // 2. Configurar Usuario
         Usuario usuario = SessionManager.getInstance().getUsuarioActual();
         if (usuario != null) {
-            // Asegúrate de que getNombreCompleto() exista en tu entidad Usuario
-            // Si no existe, usa usuario.getUsuario() por mientras
             lblUsuario.setText("Hola, " + usuario.getNombreCompleto());
         }
 
-        // 3. Aplicar Seguridad (DESCOMENTADO)
         aplicarSeguridad();
     }
-
-    // ... (imports y campos)
 
     private void aplicarSeguridad() {
         SessionManager sesion = SessionManager.getInstance();
@@ -91,8 +85,6 @@ public class SidebarController {
         btn.setVisible(false); // Lo hace invisible
         btn.setManaged(false); // Hace que el VBox no le reserve espacio
     }
-
-    // ... (Métodos de animación y navegación siguen igual) ...
 
     @FXML public void expandirSidebar() {
         sidebar.setMaxWidth(ANCHO_EXPANDIDO);

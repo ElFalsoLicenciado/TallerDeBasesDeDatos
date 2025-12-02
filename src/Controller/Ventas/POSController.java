@@ -41,7 +41,6 @@ public class POSController {
 
     @FXML
     public void initialize() {
-        // Configurar columnas manualmente para evitar errores de FXML
         colProdNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colProdPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         colProdStock.setCellValueFactory(new PropertyValueFactory<>("existencia"));

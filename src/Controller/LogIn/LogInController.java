@@ -53,8 +53,6 @@ public class LogInController {
         Usuario usuarioEncontrado = dao.login(usuarioTexto, passTexto);
 
         if (usuarioEncontrado != null) {
-            // --- CAMBIOS AQUÍ ---
-
             // 3. Obtener los permisos del rol del usuario
             Set<String> permisos = dao.obtenerPermisos(usuarioEncontrado.getIdRol());
 
