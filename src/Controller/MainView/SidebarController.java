@@ -25,6 +25,7 @@ public class SidebarController {
     @FXML private Button btnCompras;
     @FXML private Button btnInventario;
     @FXML private Button btnRH;
+    @FXML private Button btnProduccion;
     // -----------------------------------------------------------------------
 
     private final double ANCHO_CONTRAIDO = 85.0;
@@ -67,13 +68,19 @@ public class SidebarController {
             ocultarBoton(btnInventario);
         }
 
-        // 3. COMPRAS
+        //3. PRODUCCIÓN
+        if (btnInventario != null && !sesion.tienePermiso("inventario.ajustar")
+                && !sesion.tienePermiso("inventario.merma")) {
+            ocultarBoton(btnProduccion);
+        }
+
+        // 4. COMPRAS
         // Asumiendo que el permiso sea 'inventario.ajustar' o uno nuevo 'compras.crear'
         if (btnCompras != null && !sesion.tienePermiso("inventario.ajustar")) {
             ocultarBoton(btnCompras);
         }
 
-        // 4. RH
+        // 5. RH
         if (btnRH != null && !sesion.tienePermiso("usuarios.ver")) {
             ocultarBoton(btnRH);
         }
@@ -108,6 +115,7 @@ public class SidebarController {
 
     @FXML public void irAVentas() { Navigation.cambiarVista("/View/Ventas/PantallaVentas.fxml"); }
     @FXML public void irACompras() { Util.Navigation.cambiarVista("/View/Compras/PantallaCompras.fxml"); }
+    @FXML public void irAProduccion() { Util.Navigation.cambiarVista("/View/Produccion/PantallaProduccion.fxml"); }
     @FXML public void irAInventario() { Util.Navigation.cambiarVista("/View/Inventario/PantallaInventario.fxml"); }
     @FXML public void irARH() { Util.Navigation.cambiarVista("/View/RH/RH_Menu.fxml"); }
     @FXML void irAHome() { Util.Navigation.cambiarVista("/View/Home.fxml"); }

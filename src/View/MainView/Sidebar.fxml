@@ -69,6 +69,19 @@
             </ImageView>
         </graphic>
     </Button>
+
+    <Button fx:id="btnProduccion" mnemonicParsing="false" onAction="#irAProduccion"
+            maxWidth="1.7976931348623157E308"
+            prefHeight="50.0"
+            styleClass="boton-sidebar"
+            text="   Cocina / Producción">
+        <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <image> <Image url="/View/Images/produccion.png" /> </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
     <Button fx:id="btnInventario" mnemonicParsing="false" onAction="#irAInventario"
             maxWidth="1.7976931348623157E308"
             prefHeight="50.0"

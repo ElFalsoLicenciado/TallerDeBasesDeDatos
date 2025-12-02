@@ -72,6 +72,57 @@ INSERT INTO recetas (nombre, instrucciones, tiempo_preparacion, cantidad_produci
 ('Cappuccino', 'Espresso y leche espumada', 6, 1.000, 'taza'),
 ('Chocolate Caliente', 'Leche, cocoa y canela', 8, 1.000, 'taza');
 
+-- ==========================================================
+-- REPARACIÓN DE RECETAS E INGREDIENTES
+-- ==========================================================
+
+-- 1. Limpiar la tabla de relaciones para empezar de cero sin errores
+TRUNCATE TABLE recetas_ingredientes CASCADE;
+
+-- 2. Insertar ingredientes para 'Pan Dulce Tradicional'
+INSERT INTO recetas_ingredientes (id_receta, id_ingrediente, cantidad_requerida, orden_uso)
+VALUES
+    ((SELECT id FROM recetas WHERE nombre = 'Pan Dulce Tradicional'), (SELECT id FROM ingredientes WHERE nombre = 'Harina de Trigo'), 0.100, 1), -- 100g harina
+    ((SELECT id FROM recetas WHERE nombre = 'Pan Dulce Tradicional'), (SELECT id FROM ingredientes WHERE nombre = 'Azúcar'), 0.050, 2),          -- 50g azúcar
+    ((SELECT id FROM recetas WHERE nombre = 'Pan Dulce Tradicional'), (SELECT id FROM ingredientes WHERE nombre = 'Huevos'), 1.000, 3),          -- 1 huevo
+    ((SELECT id FROM recetas WHERE nombre = 'Pan Dulce Tradicional'), (SELECT id FROM ingredientes WHERE nombre = 'Mantequilla'), 0.020, 4);     -- 20g mantequilla
+
+-- 3. Insertar ingredientes para 'Concha de Chocolate'
+INSERT INTO recetas_ingredientes (id_receta, id_ingrediente, cantidad_requerida, orden_uso)
+VALUES
+    ((SELECT id FROM recetas WHERE nombre = 'Concha de Chocolate'), (SELECT id FROM ingredientes WHERE nombre = 'Harina de Trigo'), 0.100, 1),
+    ((SELECT id FROM recetas WHERE nombre = 'Concha de Chocolate'), (SELECT id FROM ingredientes WHERE nombre = 'Azúcar'), 0.060, 2),
+    ((SELECT id FROM recetas WHERE nombre = 'Concha de Chocolate'), (SELECT id FROM ingredientes WHERE nombre = 'Huevos'), 1.000, 3),
+    ((SELECT id FROM recetas WHERE nombre = 'Concha de Chocolate'), (SELECT id FROM ingredientes WHERE nombre = 'Chocolate Amargo'), 0.030, 4); -- Cobertura
+
+-- 4. Insertar ingredientes para 'Café Americano'
+INSERT INTO recetas_ingredientes (id_receta, id_ingrediente, cantidad_requerida, orden_uso)
+VALUES
+    ((SELECT id FROM recetas WHERE nombre = 'Café Americano'), (SELECT id FROM ingredientes WHERE nombre = 'Café Grano'), 0.018, 1), -- 18g café
+    ((SELECT id FROM recetas WHERE nombre = 'Café Americano'), (SELECT id FROM ingredientes WHERE nombre = 'Vaso Desechable 12oz'), 1.000, 2);
+
+-- 5. Insertar ingredientes para 'Cappuccino'
+INSERT INTO recetas_ingredientes (id_receta, id_ingrediente, cantidad_requerida, orden_uso)
+VALUES
+    ((SELECT id FROM recetas WHERE nombre = 'Cappuccino'), (SELECT id FROM ingredientes WHERE nombre = 'Café Grano'), 0.018, 1),
+    ((SELECT id FROM recetas WHERE nombre = 'Cappuccino'), (SELECT id FROM ingredientes WHERE nombre = 'Leche Entera'), 0.250, 2), -- 250ml leche
+    ((SELECT id FROM recetas WHERE nombre = 'Cappuccino'), (SELECT id FROM ingredientes WHERE nombre = 'Vaso Desechable 12oz'), 1.000, 3);
+
+-- 6. Insertar ingredientes para 'Chocolate Caliente'
+INSERT INTO recetas_ingredientes (id_receta, id_ingrediente, cantidad_requerida, orden_uso)
+VALUES
+    ((SELECT id FROM recetas WHERE nombre = 'Chocolate Caliente'), (SELECT id FROM ingredientes WHERE nombre = 'Leche Entera'), 0.300, 1),
+    ((SELECT id FROM recetas WHERE nombre = 'Chocolate Caliente'), (SELECT id FROM ingredientes WHERE nombre = 'Cocoa en Polvo'), 0.040, 2),
+    ((SELECT id FROM recetas WHERE nombre = 'Chocolate Caliente'), (SELECT id FROM ingredientes WHERE nombre = 'Canela Molida'), 0.005, 3),
+    ((SELECT id FROM recetas WHERE nombre = 'Chocolate Caliente'), (SELECT id FROM ingredientes WHERE nombre = 'Vaso Desechable 12oz'), 1.000, 4);
+
+-- 7. Verificación (Opcional: Ejecuta esto para ver si se guardaron)
+SELECT r.nombre as receta, i.nombre as ingrediente, ri.cantidad_requerida
+FROM recetas_ingredientes ri
+         JOIN recetas r ON ri.id_receta = r.id
+         JOIN ingredientes i ON ri.id_ingrediente = i.id
+ORDER BY r.nombre;
+
 INSERT INTO productos (nombre, sabor, precio, id_receta, tipo, descripcion) VALUES
 ('Pan Dulce', 'Natural', 15.00, 1, 'Pan', 'Pieza individual'),
 ('Concha Chocolate', 'Chocolate', 18.00, 2, 'Pan', 'Concha tradicional'),
@@ -112,8 +163,8 @@ DO $$
         v_rol_produccion INT;
         v_emp_id INT;
         -- Hashes (Password_123 y Cande)
-        v_hash_pass123 VARCHAR := 'cc3cf6baf4f724be58d69993145bb5270ce4f5dea4228b7c21c28676fd180446';
-        v_hash_cande VARCHAR := '34b3e34f7371d9d7d919b465f2427a3c3065a967523992257d07936676766465';
+        v_hash_pass123 VARCHAR := 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f'; --password123
+        v_hash_cande VARCHAR := 'cc3cf6baf4f724be58d69993145bb5270ce4f5dea4228b7c21c28676fd180446'; --cande
     BEGIN
         SELECT id INTO v_suc_centro FROM sucursales WHERE nombre LIKE '%Centro%' LIMIT 1;
         SELECT id INTO v_suc_altozano FROM sucursales WHERE nombre LIKE '%Altozano%' LIMIT 1;
