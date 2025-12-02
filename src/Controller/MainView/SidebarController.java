@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button; // Importante
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -113,12 +114,15 @@ public class SidebarController {
 
     @FXML public void cerrarSesion() {
         try {
+            Image icon = new Image(getClass().getResourceAsStream("/View/Images/icon.png"));
+
             SessionManager.getInstance().logout();
             Stage stageActual = (Stage) sidebar.getScene().getWindow();
             stageActual.close();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LogIn/LogIn.fxml"));
             Parent root = loader.load();
             Stage loginStage = new Stage();
+            loginStage.getIcons().add(icon);
             loginStage.setScene(new Scene(root));
             loginStage.show();
         } catch (Exception e) { e.printStackTrace(); }
