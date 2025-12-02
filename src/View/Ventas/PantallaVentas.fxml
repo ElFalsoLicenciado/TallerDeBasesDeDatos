@@ -29,7 +29,7 @@
 
             <HBox spacing="10.0">
                 <TextField fx:id="campoBusqueda" promptText="Buscar por nombre o código..."
-                           styleClass="campo-cafeteria" HBox.hgrow="ALWAYS" />
+                           styleClass="campo-cafeteria" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                 <Button onAction="#buscarProducto" text="Buscar" styleClass="boton-cafeteria" />
             </HBox>
 
@@ -42,7 +42,7 @@
                 <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
             </TableView>
 
-            <Button fx:id="btnAgregar" maxWidth="Infinity" onAction="#agregarAlCarrito"
+            <Button fx:id="btnAgregar" maxWidth="1.7976931348623157E308" onAction="#agregarAlCarrito"
                     text="Agregar al Carrito →" styleClass="boton-cafeteria" />
         </VBox>
     </left>
@@ -57,7 +57,7 @@
 
             <HBox alignment="CENTER_LEFT" spacing="10">
                 <Label text="Cliente:" style="-fx-font-weight: bold;" textFill="#4A332A"/>
-                <ComboBox fx:id="cmbClientes" prefWidth="250.0" promptText="Seleccione Cliente" styleClass="campo-cafeteria"/>
+                <ComboBox fx:id="cmbClientes" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" promptText="Seleccione Cliente" styleClass="campo-cafeteria"/>
             </HBox>
 
             <TableView fx:id="tablaCarrito" VBox.vgrow="ALWAYS">
@@ -70,42 +70,23 @@
             </TableView>
 
             <GridPane hgap="10" vgap="5" style="-fx-background-color: #FEFDF5; -fx-background-radius: 20; -fx-border-color: #DCC7AA; -fx-border-radius: 20;">
-                <padding>
-                    <Insets top="15" right="15" bottom="15" left="15"/>
-                </padding>
-
+                <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" halignment="RIGHT"/>
                 </columnConstraints>
-
                 <Label text="Subtotal:" textFill="#4A332A"/>
                 <Label fx:id="lblSubtotal" text="\$0.00" GridPane.columnIndex="1" textFill="#4A332A"/>
-
                 <Label text="Impuestos:" GridPane.rowIndex="1" textFill="#4A332A"/>
                 <Label fx:id="lblImpuestos" text="\$0.00" GridPane.columnIndex="1" GridPane.rowIndex="1" textFill="#4A332A"/>
-
-                <Label text="TOTAL:" textFill="#c0392b" GridPane.rowIndex="2">
-                    <font><Font name="System Bold" size="20.0" /></font>
-                </Label>
-                <Label fx:id="lblTotal" text="\$0.00" textFill="#c0392b" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <font><Font name="System Bold" size="20.0" /></font>
-                </Label>
+                <Label text="TOTAL:" textFill="#c0392b" GridPane.rowIndex="2"><font><Font name="System Bold" size="20.0" /></font></Label>
+                <Label fx:id="lblTotal" text="\$0.00" textFill="#c0392b" GridPane.columnIndex="1" GridPane.rowIndex="2"><font><Font name="System Bold" size="20.0" /></font></Label>
             </GridPane>
 
             <HBox spacing="10.0" alignment="CENTER_RIGHT">
-                <Button onAction="#cancelarVenta" text="Cancelar"
-                        styleClass="boton-cafeteria"
-                        style="-fx-background-color: #E74C3C;"
-                        prefHeight="40" prefWidth="100"/>
-
-                <Button fx:id="btnCobrar" onAction="#realizarCobro" text="Cobrar"
-                        styleClass="boton-cafeteria"
-                        style="-fx-background-color: #27AE60;"
-                        prefHeight="40" prefWidth="150"/>
+                <Button onAction="#cancelarVenta" text="Cancelar" styleClass="boton-cafeteria" style="-fx-background-color: #E74C3C;" prefHeight="40" prefWidth="100"/>
+                <Button fx:id="btnCobrar" onAction="#realizarCobro" text="Cobrar" styleClass="boton-cafeteria" style="-fx-background-color: #27AE60;" prefHeight="40" prefWidth="150"/>
             </HBox>
-
         </VBox>
     </center>
-
 </BorderPane>

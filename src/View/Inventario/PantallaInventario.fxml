@@ -18,7 +18,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="Controller.Inventario.InventarioController"
-            stylesheets="/View/CSS/Style.css">
+            stylesheets="@../../CSS/Style.css">
 
     <center>
         <VBox spacing="15.0" style="-fx-background-color: white;">
@@ -32,15 +32,10 @@
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <HBox styleClass="switch-container">
-                    <ToggleButton fx:id="tglProductos" text="Productos 🧁"
-                                  selected="true" onAction="#cambiarVista"
-                                  styleClass="boton-switch">
+                    <ToggleButton fx:id="tglProductos" text="Productos 🧁" selected="true" onAction="#cambiarVista" styleClass="boton-switch">
                         <toggleGroup><ToggleGroup fx:id="grupoTipo"/></toggleGroup>
                     </ToggleButton>
-
-                    <ToggleButton fx:id="tglInsumos" text="Insumos 🌾"
-                                  toggleGroup="$grupoTipo" onAction="#cambiarVista"
-                                  styleClass="boton-switch"/>
+                    <ToggleButton fx:id="tglInsumos" text="Insumos 🌾" toggleGroup="$grupoTipo" onAction="#cambiarVista" styleClass="boton-switch"/>
                 </HBox>
 
                 <Button onAction="#cargarInventario" text="Actualizar ⟳" styleClass="boton-cafeteria" />
@@ -48,7 +43,7 @@
 
             <StackPane VBox.vgrow="ALWAYS">
 
-                <ScrollPane fx:id="viewProductos" fitToWidth="true" style="-fx-background-color: transparent;">
+                <ScrollPane fx:id="viewProductos" fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                     <content>
                         <FlowPane fx:id="gridProductos" hgap="20.0" vgap="20.0" style="-fx-background-color: white;">
                             <padding><Insets top="10" left="10" right="10" bottom="10"/></padding>
@@ -56,7 +51,7 @@
                     </content>
                 </ScrollPane>
 
-                <TableView fx:id="tablaInsumos" visible="false">
+                <TableView fx:id="tablaInsumos" visible="false" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colCodigo" text="Código" prefWidth="100.0" />
                         <TableColumn fx:id="colNombre" text="Insumo" prefWidth="250.0" />

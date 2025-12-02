@@ -30,6 +30,15 @@ public class RHListaController {
                     dao.listarPorSucursal(usuarioActual.getIdSucursal())
             ));
         }
+
+        listaViewEmpleados.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Si hizo doble clic
+                // Verificar que realmente haya algo seleccionado (y no doble clic en blanco)
+                if (listaViewEmpleados.getSelectionModel().getSelectedItem() != null) {
+                    irAEditar();
+                }
+            }
+        });
     }
 
     @FXML

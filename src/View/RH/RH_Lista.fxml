@@ -32,7 +32,7 @@
         <HBox alignment="CENTER_RIGHT">
             <padding><Insets right="20" bottom="20"/></padding>
             <Button text="Gestionar Seleccionado →" onAction="#irAEditar"
-                    styleClass="boton-frappe" prefHeight="40" prefWidth="180"/>
+                    styleClass="boton-frappe" prefHeight="40" prefWidth="240"/>
         </HBox>
     </bottom>
 

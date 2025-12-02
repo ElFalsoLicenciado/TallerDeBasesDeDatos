@@ -33,7 +33,7 @@
             <HBox spacing="10.0">
                 <VBox HBox.hgrow="ALWAYS">
                     <Label text="Cantidad a comprar:" styleClass="label-formulario"/>
-                    <TextField fx:id="txtCantidad" promptText="Ej. 10.5" styleClass="campo-cafeteria"/>
+                    <TextField fx:id="txtCantidad" promptText="Ej. 10.5" styleClass="campo-cafeteria" maxWidth="Infinity"/>
                 </VBox>
                 <VBox alignment="BOTTOM_LEFT">
                     <Label fx:id="lblUnidad" text="unidades" textFill="#7f8c8d"/>

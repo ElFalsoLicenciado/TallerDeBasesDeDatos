@@ -6,6 +6,7 @@
 .root {
     -fx-background-color: #FFF8E7;
     -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 16px;
 }
 
 /* Fondo específico para la ventana de log in */
