@@ -119,6 +119,19 @@
     </Label>
     <Separator opacity="0.3" />
 
+    <Button fx:id="btnLogs" mnemonicParsing="false" onAction="#irALogs"
+            maxWidth="1.7976931348623157E308"
+            prefHeight="50.0"
+            visible="false" managed="false"
+            styleClass="boton-sidebar"
+            text="   Auditoría / Logs">
+        <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <image> <Image url="/View/Images/logs.png" /> </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
     <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#cerrarSesion"
             maxWidth="1.7976931348623157E308"
             prefHeight="50.0"

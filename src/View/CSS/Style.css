@@ -1,263 +1,150 @@
-/* Estilo base para el botón principal */
-.boton-cafeteria {
-    -fx-background-color: #6F4E37; /* Color Café "Coffee" */
-    -fx-text-fill: white;           /* Texto blanco */
-    -fx-background-radius: 30px;    /* Bordes MUY redondos (tipo pastilla) */
-    -fx-border-radius: 30px;        /* Asegura que el borde siga la curva */
+/* =============================================================================
+   1. CONFIGURACIÓN BASE Y COLORES GLOBALES
+   ============================================================================= */
+
+/* Fondo general para toda la aplicación (Beige "Latte") */
+.root {
+    -fx-background-color: #FFF8E7;
     -fx-font-family: "Segoe UI", sans-serif;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;               /* Manita al pasar el mouse */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2); /* Sombra suave */
 }
 
-/* Efecto cuando pasas el mouse por encima (Hover) */
-.boton-cafeteria:hover {
-    -fx-background-color: #8B5E3C; /* Un café un poco más claro (Leche) */
-    -fx-scale-x: 1.02;             /* Crece un poquito */
-    -fx-scale-y: 1.02;
+/* Fondo específico para la ventana de log in */
+.login-window {
+    -fx-background-color: #FFFFFF; /* Blanco puro */
 }
 
-/* Efecto cuando haces clic (Pressed) */
-.boton-cafeteria:pressed {
-    -fx-background-color: #4A332A; /* Café muy oscuro (Espresso) */
-    -fx-effect: none;              /* Quita la sombra para que parezca hundido */
-    -fx-translate-y: 1;            /* Se mueve 1 pixel abajo */
-}
-
-/* Estilo base para TextField y PasswordField */
-.campo-cafeteria {
-    -fx-background-color: #FEFDF5;  /* Un crema muy suave (leche) */
-    -fx-border-color: #DCC7AA;      /* Borde color "café con leche" claro */
-    -fx-border-width: 1.5px;
-    -fx-background-radius: 20px;    /* Bordes redondeados */
-    -fx-border-radius: 20px;
-    -fx-padding: 8px 15px;          /* Espacio interno para que el texto no pegue al borde */
-    -fx-text-fill: #4A332A;         /* Texto color café oscuro (Espresso) */
-    -fx-font-size: 14px;
-    -fx-font-family: "Segoe UI", sans-serif;
-    -fx-prompt-text-fill: #A68B7C;  /* El texto de ayuda en un tono suave */
-}
-
-/* Efecto cuando seleccionas el campo (Focus) */
-.campo-cafeteria:focused {
-    -fx-border-color: #6F4E37;      /* El borde cambia al color del botón principal */
-    -fx-background-color: #FFFFFF;  /* El fondo se vuelve blanco puro para resaltar */
-    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.2), 8, 0, 0, 0); /* Un resplandor café suave */
-}
-
-/* Efecto cuando pasas el mouse por encima (Hover) */
-.campo-cafeteria:hover {
-    -fx-background-color: #FFF;     /* Se aclara ligeramente */
-    -fx-border-color: #B09B87;      /* El borde se oscurece un poco */
-}
-
-.titulo-cafeteria {
-    -fx-font-family: "Playfair Display", serif;
-    -fx-font-size: 42px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #6F4E37; /* El color "Coffee" del botón normal */
-    -fx-underline: true;    /* Opcional: una línea debajo */
-}
-
-.boton-sidebar {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-family: "Segoe UI", sans-serif;
-    -fx-font-size: 14px;
-    -fx-alignment: BASELINE_LEFT; /* Mantiene el icono a la izquierda */
-    -fx-padding: 10px 20px;       /* Aumenté un poco el padding izquierdo */
-    -fx-cursor: hand;
-
-    /* --- LA SOLUCIÓN A LOS PUNTOS --- */
-    -fx-text-overrun: clip;      /* Corta el texto tajantemente */
-    -fx-ellipsis-string: "";     /* Reemplaza los "..." por nada */
-}
-
-.boton-sidebar:hover {
-    -fx-background-color: #4A332A; /* Un café un poco más claro (Leche) */
-    -fx-scale-x: 1.02;             /* Crece un poquito */
-    -fx-scale-y: 1.02;
-}
-
-/* Estilo específico para el botón de LogOut (por ID) */
-#btnLogout:hover {
-    -fx-background-color: #C0392B; /* Rojo intenso */
-    -fx-border-color: #E74C3C;     /* Borde rojo claro */
-    -fx-text-fill: white;
-}
-/* --- Estados del Inventario (Filas de Tabla) --- */
-
-/* --- Paleta Latte & Frappe --- */
-
+/* Clases de utilidad para fondos específicos */
 .fondo-latte {
-    -fx-background-color: #FFF8E7; /* Crema suave */
+    -fx-background-color: #FFF8E7;
 }
 
-.titulo-frappe {
+/* Títulos principales (Estilo Frappe) */
+.titulo-frappe, .titulo-cafeteria {
     -fx-text-fill: #6F4E37; /* Café clásico */
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Playfair Display", serif; /* Fuente elegante */
     -fx-font-size: 28px;
     -fx-font-weight: bold;
 }
 
-.boton-latte {
-    -fx-background-color: #C69C6D; /* Caramelo */
+.titulo-cafeteria {
+    -fx-font-size: 42px;
+    -fx-underline: true;
+}
+
+
+/* =============================================================================
+   2. COMPONENTES DE INTERFAZ (Botones, Inputs)
+   ============================================================================= */
+
+/* --- Botones Principales (Acciones) --- */
+.boton-cafeteria, .boton-latte, .boton-frappe {
     -fx-text-fill: white;
-    -fx-background-radius: 15;
     -fx-font-weight: bold;
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);
 }
 
-.boton-latte:hover {
-    -fx-background-color: #B08555; /* Caramelo oscuro */
-}
-
-.boton-frappe { /* Para acciones principales o peligrosas */
-    -fx-background-color: #8B5E3C; /* Mocha */
-    -fx-text-fill: white;
-    -fx-background-radius: 15;
-    -fx-cursor: hand;
-}
-
-.lista-latte .list-cell {
-    -fx-background-color: #FFF8E7;
-    -fx-text-fill: #4A332A;
-    -fx-padding: 10px;
-}
-.lista-latte .list-cell:filled:selected {
-    -fx-background-color: #DCC7AA; /* Selección color leche con café */
-    -fx-text-fill: #4A332A;
-}
-/* Etiqueta estilo formulario (Spotify style) */
-.label-formulario {
-    -fx-text-fill: #6F4E37; /* Café oscuro para contraste */
-    -fx-font-family: "System";
-    -fx-font-weight: bold;
-    -fx-font-size: 13px;
-    -fx-padding: 0 0 2 0; /* Un pequeño espacio abajo */
-}
-
-/* --- ESTILOS PARA ALERTAS (DialogPane) --- */
-
-.dialog-pane {
-    -fx-background-color: #FFF8E7; /* Fondo Latte */
-    -fx-border-color: #6F4E37;     /* Borde Café */
-    -fx-border-width: 2px;
-}
-
-/* El área del contenido del texto */
-.dialog-pane > .content.label {
-    -fx-text-fill: #4A332A; /* Texto Espresso */
+/* Botón Café Estándar (Marrón Oscuro) */
+.boton-cafeteria {
+    -fx-background-color: #6F4E37;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
     -fx-font-size: 14px;
-    -fx-font-family: "Segoe UI";
-    -fx-padding: 20px;
+}
+.boton-cafeteria:hover {
+    -fx-background-color: #8B5E3C; /* Más claro */
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+.boton-cafeteria:pressed {
+    -fx-background-color: #4A332A; /* Más oscuro */
+    -fx-effect: none;
+    -fx-translate-y: 1;
 }
 
-/* El encabezado (Header) */
-.dialog-pane:header .header-panel {
-    -fx-background-color: #DCC7AA; /* Color Leche con Café */
-    -fx-padding: 10px;
+/* Botón Latte (Caramelo) */
+.boton-latte {
+    -fx-background-color: #C69C6D;
+    -fx-background-radius: 15;
 }
-
-.dialog-pane:header .header-panel .label {
-    -fx-text-fill: #6F4E37; /* Título Café */
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-}
-
-/* Botones dentro de la alerta */
-.dialog-pane .button {
-    -fx-background-color: #C69C6D; /* Caramelo */
-    -fx-text-fill: white;
-    -fx-background-radius: 10;
-    -fx-cursor: hand;
-}
-
-.dialog-pane .button:hover {
+.boton-latte:hover {
     -fx-background-color: #B08555;
 }
 
-/* --- ESTILOS DE TABLAS (TableView) --- */
-
-.table-view {
-    -fx-background-color: transparent;
-    -fx-border-color: #DCC7AA;
-    -fx-border-width: 1px;
-    -fx-base: #FEFDF5;
+/* Botón Frappe (Mocha / Peligro o Énfasis) */
+.boton-frappe {
+    -fx-background-color: #8B5E3C;
+    -fx-background-radius: 15;
 }
 
-/* 1. Fondo de la cabecera (Área general) */
-.table-view .column-header-background {
-    -fx-background-color: #DCC7AA; /* Color "Café con leche" (Antes era oscuro) */
-    -fx-background-radius: 5px 5px 0 0;
-    -fx-background-insets: 0;
+
+/* --- Campos de Texto (TextField, PasswordField, ComboBox) --- */
+.campo-cafeteria {
+    -fx-background-color: #FEFDF5;  /* Crema muy suave */
+    -fx-border-color: #DCC7AA;      /* Borde café con leche */
+    -fx-border-width: 1.5px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-padding: 8px 15px;
+    -fx-text-fill: #4A332A;         /* Texto Espresso */
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #A68B7C;
 }
 
-/* 2. Fondo de cada columna individual */
-.table-view .column-header {
-    -fx-background-color: #DCC7AA; /* Color "Café con leche" */
-    -fx-border-color: #FEFDF5;     /* Una línea sutil entre columnas */
-    -fx-border-width: 0 1 0 0;
-}
-
-/* 3. El TEXTO de los encabezados */
-.table-view .column-header .label {
-    -fx-text-fill: #4A332A;
-    -fx-font-weight: bold;
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-alignment: CENTER-LEFT;
-}
-
-/* Las filas (Celdas) */
-.table-view .table-cell {
-    -fx-text-fill: #4A332A;
-    -fx-alignment: CENTER-LEFT;
-    -fx-padding: 0 0 0 10px;
-}
-
-/* Filas impares */
-.table-row-cell {
+.campo-cafeteria:focused {
+    -fx-border-color: #6F4E37;
     -fx-background-color: #FFFFFF;
-    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.2), 8, 0, 0, 0);
 }
 
-/* Filas pares */
-.table-row-cell:odd {
-    -fx-background-color: #FFF8E7;
+.campo-cafeteria:hover {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #B09B87;
 }
 
-/* Fila seleccionada */
-.table-row-cell:filled:selected {
-    -fx-background-color: #C69C6D;
-    -fx-background-insets: 0;
+/* Etiquetas de formularios (Spotify Style) */
+.label-formulario {
+    -fx-text-fill: #6F4E37;
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 0 0 2 0;
 }
 
-.table-row-cell:filled:selected .table-cell {
+
+/* =============================================================================
+   3. MÓDULOS ESPECÍFICOS
+   ============================================================================= */
+
+/* --- Sidebar (Menú Lateral) --- */
+.boton-sidebar {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    /* Truco para ocultar texto al contraer */
+    -fx-text-overrun: clip;
+    -fx-ellipsis-string: "";
+}
+
+.boton-sidebar:hover {
+    -fx-background-color: #4A332A;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+#btnLogout:hover {
+    -fx-background-color: #C0392B; /* Rojo al salir */
+    -fx-border-color: #E74C3C;
     -fx-text-fill: white;
 }
 
-.table-view .placeholder .label {
-    -fx-text-fill: #7f8c8d;
-}
 
-.table-view .scroll-bar:vertical .thumb,
-.table-view .scroll-bar:horizontal .thumb {
-    -fx-background-color: #DCC7AA;
-}
-
-/* --- Scrollbars de la tabla (Para que combinen) --- */
-.table-view .scroll-bar:vertical .thumb,
-.table-view .scroll-bar:horizontal .thumb {
-    -fx-background-color: #DCC7AA;     /* Café con leche */
-}
-
-/* --- TARJETAS DE INVENTARIO (GRID) --- */
-
+/* --- Inventario (Tarjetas y Estados) --- */
 .producto-card {
-    -fx-background-color: #FEFDF5; /* Crema */
+    -fx-background-color: #FEFDF5;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-border-color: #DCC7AA;
@@ -267,55 +154,197 @@
     -fx-alignment: TOP-CENTER;
     -fx-spacing: 5;
 }
-
 .producto-card:hover {
-    -fx-border-color: #C69C6D; /* Caramelo al pasar el mouse */
+    -fx-border-color: #C69C6D;
     -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.3), 8, 0, 0, 3);
 }
 
 .texto-cantidad {
-    -fx-font-family: "System";
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-text-fill: #4A332A;
 }
-
-/* Colores para el texto de cantidad según estado */
 .stock-critico { -fx-text-fill: #C0392B; } /* Rojo */
-.stock-bajo { -fx-text-fill: #fd7c27; }    /* Naranja */
-.stock-ok { -fx-text-fill: #27AE60; }      /* Verde */
+.stock-bajo    { -fx-text-fill: #fd7c27; } /* Naranja */
+.stock-ok      { -fx-text-fill: #27AE60; } /* Verde */
 
-/* --- SWITCH DE VISTAS (Toggle Buttons) --- */
 
-/* El contenedor (HBox) que envuelve a los botones */
+/* --- Switch de Vistas (Toggle) --- */
 .switch-container {
-    -fx-background-color: #EBE0D0; /* Color "Espuma oscura" */
-    -fx-background-radius: 30;      /* Muy redondo */
-    -fx-padding: 3;                 /* Espacio entre el borde y los botones */
-    -fx-spacing: 0;                 /* Botones pegados visualmente */
+    -fx-background-color: #EBE0D0;
+    -fx-background-radius: 30;
+    -fx-padding: 3;
+    -fx-spacing: 0;
 }
 
-/* Estado base de los botones (No seleccionados) */
 .boton-switch {
     -fx-background-color: transparent;
-    -fx-text-fill: #6F4E37;         /* Texto Café */
+    -fx-text-fill: #6F4E37;
     -fx-background-radius: 30;
-    -fx-font-family: "Segoe UI";
     -fx-font-weight: bold;
     -fx-font-size: 13px;
     -fx-cursor: hand;
-    -fx-min-width: 110px;           /* Ancho mínimo para que se vean iguales */
+    -fx-min-width: 110px;
     -fx-alignment: CENTER;
 }
-
-/* Efecto Hover (solo si no está seleccionado) */
 .boton-switch:hover {
     -fx-background-color: rgba(255, 255, 255, 0.4);
 }
-
-/* Estado SELECCIONADO (El activo) */
 .boton-switch:selected {
-    -fx-background-color: #C69C6D;  /* Color Caramelo */
-    -fx-text-fill: white;           /* Texto blanco */
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 4, 0, 0, 1); /* Sombra suave */
+    -fx-background-color: #C69C6D;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 4, 0, 0, 1);
+}
+
+
+/* =============================================================================
+   4. TABLAS DE DATOS (TableView)
+   ============================================================================= */
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #DCC7AA;
+    -fx-border-width: 1px;
+    -fx-base: #FEFDF5; /* Base crema */
+}
+
+/* Encabezados */
+.table-view .column-header-background {
+    -fx-background-color: #DCC7AA;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-background-insets: 0;
+}
+.table-view .column-header {
+    -fx-background-color: #DCC7AA;
+    -fx-border-color: #FEFDF5;
+    -fx-border-width: 0 1 0 0;
+}
+.table-view .column-header .label {
+    -fx-text-fill: #4A332A;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-alignment: CENTER-LEFT;
+}
+
+/* Celdas y Filas */
+.table-view .table-cell {
+    -fx-text-fill: #4A332A;
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 0 0 0 10px;
+}
+.table-row-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent;
+}
+.table-row-cell:odd {
+    -fx-background-color: #FFF8E7;
+}
+.table-row-cell:filled:selected {
+    -fx-background-color: #C69C6D;
+    -fx-background-insets: 0;
+}
+.table-row-cell:filled:selected .table-cell {
+    -fx-text-fill: white;
+}
+
+/* Placeholder (Texto cuando está vacía) */
+.table-view .placeholder .label {
+    -fx-text-fill: #7f8c8d;
+}
+
+/* Scrollbars */
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #DCC7AA;
+}
+
+/* Listas (ListView - Usado en RH) */
+.lista-latte .list-cell {
+    -fx-background-color: #FFF8E7;
+    -fx-text-fill: #4A332A;
+    -fx-padding: 10px;
+}
+.lista-latte .list-cell:filled:selected {
+    -fx-background-color: #DCC7AA;
+    -fx-text-fill: #4A332A;
+}
+
+
+/* =============================================================================
+   5. VENTANAS EMERGENTES Y ALERTAS
+   ============================================================================= */
+
+.dialog-pane {
+    -fx-background-color: #FFF8E7;
+    -fx-border-color: #6F4E37;
+    -fx-border-width: 2px;
+}
+
+.dialog-pane > .content.label {
+    -fx-text-fill: #4A332A;
+    -fx-font-size: 14px;
+    -fx-padding: 20px;
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: #DCC7AA;
+    -fx-padding: 10px;
+}
+.dialog-pane:header .header-panel .label {
+    -fx-text-fill: #6F4E37;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #C69C6D;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+.dialog-pane .button:hover {
+    -fx-background-color: #B08555;
+}
+
+
+/* =============================================================================
+   6. TEMA ESPECIAL: DARK ROAST TERMINAL (Logs/Hacker)
+   ============================================================================= */
+
+.fondo-hacker {
+    -fx-background-color: #1B1613; /* Negro Espresso */
+}
+
+.titulo-seguridad {
+    -fx-text-fill: #E74C3C;
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
+    -fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.5), 10, 0, 0, 0);
+}
+
+.subtitulo-seguridad {
+    -fx-text-fill: #7F8C8D;
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-style: italic;
+}
+
+.console-area {
+    -fx-control-inner-background: #261E19;
+    -fx-background-color: #261E19;
+    -fx-text-fill: #EBE0D0; /* Texto espuma */
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 13px;
+    -fx-border-color: #4E342E;
+    -fx-border-width: 1px;
+    -fx-highlight-fill: #C0392B;
+    -fx-highlight-text-fill: white;
+}
+
+.console-area .scroll-bar {
+    -fx-background-color: #1B1613;
+}
+.console-area .scroll-bar .thumb {
+    -fx-background-color: #5D4037;
+    -fx-background-radius: 0;
 }

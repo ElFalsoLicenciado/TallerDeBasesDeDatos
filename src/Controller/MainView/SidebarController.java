@@ -26,6 +26,7 @@ public class SidebarController {
     @FXML private Button btnInventario;
     @FXML private Button btnRH;
     @FXML private Button btnProduccion;
+    @FXML private Button btnLogs;
     // -----------------------------------------------------------------------
 
     private final double ANCHO_CONTRAIDO = 85.0;
@@ -84,6 +85,17 @@ public class SidebarController {
         if (btnRH != null && !sesion.tienePermiso("usuarios.ver")) {
             ocultarBoton(btnRH);
         }
+
+        //SERVER LOGS
+        if (btnLogs != null) {
+            if (sesion.tienePermiso("sys.full_access")) {
+                btnLogs.setVisible(true);
+                btnLogs.setManaged(true); // Que ocupe espacio
+            } else {
+                btnLogs.setVisible(false);
+                btnLogs.setManaged(false); // Que desaparezca y los demás suban
+            }
+        }
     }
 
     /**
@@ -119,6 +131,7 @@ public class SidebarController {
     @FXML public void irAInventario() { Util.Navigation.cambiarVista("/View/Inventario/PantallaInventario.fxml"); }
     @FXML public void irARH() { Util.Navigation.cambiarVista("/View/RH/RH_Menu.fxml"); }
     @FXML void irAHome() { Util.Navigation.cambiarVista("/View/Home.fxml"); }
+    @FXML public void irALogs() { Util.Navigation.cambiarVista("/View/Admin/PantallaServerLog.fxml"); }
 
     @FXML public void cerrarSesion() {
         try {
@@ -132,6 +145,7 @@ public class SidebarController {
             Stage loginStage = new Stage();
             loginStage.getIcons().add(icon);
             loginStage.setScene(new Scene(root));
+            loginStage.setResizable(false);
             loginStage.show();
         } catch (Exception e) { e.printStackTrace(); }
     }

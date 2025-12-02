@@ -80,7 +80,11 @@ public class LogInController {
 
             stage.setScene(scene);
             stage.setTitle("Lua's Place - Sistema de Gestión");
+
+            stage.setResizable(true);
+            stage.setMaximized(true);
             stage.centerOnScreen();
+
             stage.show();
 
         } catch (IOException e) {

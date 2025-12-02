@@ -7,8 +7,6 @@ import Util.HashPassword;
 import java.sql.*;
 import java.util.HashSet; // <--- Importante
 import java.util.Set;     // <--- Importante
-import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
