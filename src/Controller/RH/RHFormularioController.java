@@ -2,8 +2,10 @@ package Controller.RH;
 
 import Model.DAO.EmpleadoDAO;
 import Model.Entities.Empleado;
+import Model.Entities.Usuario;
 import Util.AlertUtils;
 import Util.Navigation;
+import Util.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,16 +13,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.control.ButtonType;
 
 import java.sql.Date;
 import java.util.Map;
 
 public class RHFormularioController {
 
+    // --- VARIABLE ESTÁTICA PARA PASAR DATOS ---
     private static Empleado empleadoAEditar;
     public static void setEmpleadoAEditar(Empleado e) { empleadoAEditar = e; }
-    // -------------------------------------------------------
+    // ------------------------------------------
 
     @FXML private Label lblTitulo;
     @FXML private TextField txtNombres, txtApellidos, txtLugarNac, txtTelefono, txtCorreo, txtDireccion;
@@ -37,6 +39,23 @@ public class RHFormularioController {
         dao = new EmpleadoDAO();
         cmbTipo.getItems().addAll("Administrativo", "Produccion");
         cargarSucursales();
+
+        // --- SEGURIDAD: RESTRICCIÓN DE SUCURSAL ---
+        // Si el usuario NO es admin, forzamos su sucursal y bloqueamos el combo
+        Usuario usuarioActual = SessionManager.getInstance().getUsuarioActual();
+        boolean esAdmin = SessionManager.getInstance().tienePermiso("sys.full_access");
+
+        if (!esAdmin && usuarioActual != null) {
+            cmbSucursal.setDisable(true); // Bloquear
+            // Pre-seleccionar la sucursal del usuario
+            for (SucursalItem s : cmbSucursal.getItems()) {
+                if (s.id == usuarioActual.getIdSucursal()) {
+                    cmbSucursal.setValue(s);
+                    break;
+                }
+            }
+        }
+        // -----------------------------------------
 
         if (empleadoAEditar != null) { // MODO EDICIÓN
             lblTitulo.setText("Editar Empleado: " + empleadoAEditar.getCodigo());
@@ -72,7 +91,7 @@ public class RHFormularioController {
     public void guardar() {
         // 1. Validaciones básicas
         if (txtNombres.getText().isEmpty() || txtApellidos.getText().isEmpty()) {
-            mostrarAlerta("Error", "Nombre y Apellido son obligatorios.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "Nombre y Apellido son obligatorios.");
             return;
         }
 
@@ -80,7 +99,7 @@ public class RHFormularioController {
         boolean esNuevo = (empleadoAEditar == null);
         Empleado e = esNuevo ? new Empleado() : empleadoAEditar;
 
-        // 3. Mapeo de campos del formulario al objeto
+        // 3. Mapeo de campos
         e.setNombres(txtNombres.getText());
         e.setApellidos(txtApellidos.getText());
         e.setLugarNacimiento(txtLugarNac.getText());
@@ -89,22 +108,26 @@ public class RHFormularioController {
         e.setDireccion(txtDireccion.getText());
         e.setTipo(cmbTipo.getValue());
         if (dpFechaNac.getValue() != null) e.setFechaNacimiento(Date.valueOf(dpFechaNac.getValue()));
-        if (cmbSucursal.getValue() != null) e.setIdSucursal(cmbSucursal.getValue().id);
+
+        // Asignación de sucursal (Respetando si estaba bloqueado o no)
+        if (cmbSucursal.getValue() != null) {
+            e.setIdSucursal(cmbSucursal.getValue().id);
+        }
 
         // 4. Guardar en Base de Datos
         if (dao.guardar(e)) {
+            // Actualizar estado para pasar a modo edición inmediatamente
             empleadoAEditar = e;
-
             btnCredenciales.setVisible(true);
             lblTitulo.setText("Editar Empleado: " + e.getCodigo());
 
             if (esNuevo) {
                 mostrarConfirmacionCrearUsuario(e);
             } else {
-                mostrarAlerta("Éxito", "Información actualizada correctamente.");
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Información actualizada correctamente.");
             }
         } else {
-            mostrarAlerta("Error", "No se pudo guardar en la base de datos.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo guardar en la base de datos.");
         }
     }
 
@@ -114,39 +137,33 @@ public class RHFormularioController {
 
         // Validación de seguridad
         if (target == null || target.getId() == 0) {
-            mostrarAlerta("Atención", "Primero debe guardar los datos del empleado para generar un ID.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Atención", "Primero debe guardar los datos del empleado para generar un ID.");
             return;
         }
 
         try {
-            // 1. Pasar el empleado objetivo al controlador de credenciales
             RHCredencialesController.setEmpleadoObjetivo(target);
 
-            // 2. Cargar la vista modal
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/RH/RH_Credenciales.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana de atrás
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Gestión de Acceso");
             stage.setResizable(false);
-
-            // 3. Mostrar y esperar
             stage.showAndWait();
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            mostrarAlerta("Error", "No se pudo abrir la ventana de credenciales.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir la ventana de credenciales.");
         }
     }
 
     private void mostrarConfirmacionCrearUsuario(Empleado e) {
-        // Definimos los botones
         ButtonType btnSi = new ButtonType("Sí, crear usuario");
         ButtonType btnNo = new ButtonType("No, salir");
 
-        // Usamos la utilidad estilizada
         AlertUtils.confirmar(
                 "Empleado Creado",
                 "El empleado se guardó correctamente.",
@@ -167,16 +184,15 @@ public class RHFormularioController {
         if (empleadoAEditar == null) return;
 
         if (dao.eliminar(empleadoAEditar.getId())) {
-            mostrarAlerta("Baja Exitosa", "El empleado ha sido desactivado.");
-            cancelar(); // Volver
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Baja Exitosa", "El empleado ha sido desactivado.");
+            cancelar();
         } else {
-            mostrarAlerta("Error", "No se pudo dar de baja.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo dar de baja.");
         }
     }
 
     @FXML
     public void cancelar() {
-        // Lógica de navegación inteligente
         if (empleadoAEditar != null) {
             Navigation.cambiarVista("/View/RH/RH_Lista.fxml");
         } else {
@@ -191,11 +207,10 @@ public class RHFormularioController {
         }
     }
 
-    private void mostrarAlerta(String titulo, String contenido) {
-        AlertUtils.mostrar(Alert.AlertType.ERROR, titulo, contenido);
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
+        AlertUtils.mostrar(tipo, titulo, contenido);
     }
 
-    // Clase auxiliar para llenar el ComboBox
     private static class SucursalItem {
         int id; String nombre;
         public SucursalItem(int id, String nombre) { this.id = id; this.nombre = nombre; }

@@ -2,8 +2,10 @@ package Controller.RH;
 
 import Model.DAO.EmpleadoDAO;
 import Model.Entities.Empleado;
+import Model.Entities.Usuario;
 import Util.AlertUtils;
 import Util.Navigation;
+import Util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -16,8 +18,18 @@ public class RHListaController {
     @FXML
     public void initialize() {
         EmpleadoDAO dao = new EmpleadoDAO();
-        // Carga la lista
-        listaViewEmpleados.setItems(FXCollections.observableArrayList(dao.listarTodos()));
+        Usuario usuarioActual = SessionManager.getInstance().getUsuarioActual();
+
+        // LÓGICA DE SEGURIDAD
+        if (SessionManager.getInstance().tienePermiso("sys.full_access")) {
+            // Si es Super Admin, ve todo
+            listaViewEmpleados.setItems(FXCollections.observableArrayList(dao.listarTodos()));
+        } else {
+            // Si es Gerente (o cualquier otro rol), solo ve su sucursal
+            listaViewEmpleados.setItems(FXCollections.observableArrayList(
+                    dao.listarPorSucursal(usuarioActual.getIdSucursal())
+            ));
+        }
     }
 
     @FXML
@@ -25,11 +37,11 @@ public class RHListaController {
         Empleado seleccionado = listaViewEmpleados.getSelectionModel().getSelectedItem();
 
         if (seleccionado == null) {
-            mostrarAlerta("Selección requerida", "Por favor seleccione un empleado de la lista.");
+            // Usando tu utilidad de alertas estilizadas
+            AlertUtils.mostrar(Alert.AlertType.WARNING, "Selección requerida", "Por favor seleccione un empleado de la lista.");
             return;
         }
 
-        // Pasamos el empleado al controlador del formulario
         RHFormularioController.setEmpleadoAEditar(seleccionado);
         Navigation.cambiarVista("/View/RH/RH_Formulario.fxml");
     }
@@ -37,9 +49,5 @@ public class RHListaController {
     @FXML
     public void volverAlMenu() {
         Navigation.cambiarVista("/View/RH/RH_Menu.fxml");
-    }
-
-    private void mostrarAlerta(String titulo, String contenido) {
-        AlertUtils.mostrar(Alert.AlertType.ERROR, titulo, contenido);
     }
 }

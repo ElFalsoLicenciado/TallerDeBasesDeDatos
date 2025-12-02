@@ -139,4 +139,26 @@ public class EmpleadoDAO {
                 rs.getString("tipo"), rs.getInt("id_sucursal"), rs.getBoolean("activo")
         );
     }
+
+    /**
+     * Obtiene solo los empleados asignados a una sucursal específica.
+     */
+    public List<Empleado> listarPorSucursal(int idSucursal) {
+        List<Empleado> lista = new ArrayList<>();
+        String sql = "SELECT * FROM empleados WHERE activo = TRUE AND id_sucursal = ? ORDER BY apellidos";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idSucursal);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                lista.add(mapResultSetToEmpleado(rs)); // Reutilizamos tu método helper existente
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
 }
