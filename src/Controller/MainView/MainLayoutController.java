@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -90,8 +91,11 @@ public class MainLayoutController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LogIn/LogIn.fxml"));
                 Parent root = loader.load();
 
+                Image icon = new Image("/View/Images/icon.png");
+
                 Stage loginStage = new Stage();
                 loginStage.setScene(new Scene(root));
+                loginStage.getIcons().add(icon);
                 loginStage.setTitle("Lua's Place - Acceso");
                 loginStage.setResizable(false);
                 loginStage.show();
