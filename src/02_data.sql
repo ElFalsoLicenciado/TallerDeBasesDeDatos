@@ -177,7 +177,7 @@ DO $$
 
         -- Admin Original (Gabriela Lua)
         INSERT INTO empleados (nombres, apellidos, fecha_nacimiento, lugar_nacimiento, direccion, telefono, correo, tipo, id_sucursal)
-        VALUES ('Gabriela', 'Lua Vargas', '1985-03-15', 'Morelia', 'Centro', '4431111111', 'gabriela.lua@luasplace.com', 'Administrativo', v_suc_centro) RETURNING id INTO v_emp_id;
+        VALUES ('Gabriela', 'Lua Vargas', '1985-03-15', 'Morelia', 'Centro', '4431111111', 'gabriela.lua@luasplace.com', 'Administrativo', 0) RETURNING id INTO v_emp_id;
         INSERT INTO usuarios (id_empleado, usuario, contrasena, rol, id_rol) VALUES (v_emp_id, 'admin', v_hash_pass123, 'Admin', v_rol_admin);
 
         -- Gerente Centro (Maria Garcia)

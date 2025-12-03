@@ -112,6 +112,35 @@
     -fx-padding: 0 0 2 0;
 }
 
+/* --- DASHBOARD (Tarjetas de Métricas) --- */
+
+.card-metric {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-padding: 20;
+    -fx-alignment: CENTER_LEFT;
+    -fx-min-width: 250px;
+}
+
+.card-metric-title {
+    -fx-text-fill: #7f8c8d; /* Gris suave */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.card-metric-value {
+    -fx-text-fill: #6F4E37; /* Café marca */
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI";
+}
+
+/* Variación para alertas (Stock bajo) */
+.card-warning .card-metric-value {
+    -fx-text-fill: #C0392B; /* Rojo */
+}
+
 
 /* =============================================================================
    3. MÓDULOS ESPECÍFICOS
