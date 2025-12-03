@@ -1,0 +1,76 @@
+src/    
+├── Main.java                       // Punto de entrada (Lanza el Login)    
+│   
+├── Controller/                     // Lógica de la UI  
+│   ├── LoginController.java        // Ya existe    
+│   ├── MainLayoutController.java   // Ya existe    
+│   ├── SidebarController.java      // Ya existe    
+│   │   
+│   ├── Ventas/ 
+│   │   ├── POSController.java      // Pantalla de cobro    
+│   │   ├── ClientesController.java // CRUD Clientes    
+│   │   └── HistorialController.java    
+│   │   
+│   ├── Inventario/ 
+│   │   ├── StockController.java    // Tabla de existencias (Vista Inventario)  
+│   │   ├── ComprasController.java  // Registro de compras a proveedores    
+│   │   └── InsumosController.java  // CRUD Ingredientes    
+│   │   
+│   ├── Produccion/                 // *Nuevo (Sugerido por la DB)* 
+│   │   ├── RecetasController.java  
+│   │   └── OrdenesProduccionController.java    
+│   │   
+│   └── RH/ 
+│       ├── EmpleadosController.java    
+│       └── UsuariosController.java 
+│   
+├── Model/                          // Lógica de Negocio    
+│   ├── DatabaseConnection.java     // Singleton conexión JDBC  
+│   │   
+│   ├── DAO/                        // Acceso a Datos (SQL puro)    
+│   │   ├── UsuarioDAO.java 
+│   │   ├── VentaDAO.java           // Inserta en ventas y detalles_ventas  
+│   │   ├── ProductoDAO.java        // Lee vista_productos_margen   
+│   │   ├── InventarioDAO.java      // Maneja movimientos_inventario    
+│   │   ├── EmpleadoDAO.java    
+│   │   └── ProduccionDAO.java      // Maneja lotes y recetas   
+│   │   
+│   ├── Entities/                   // POJOs (Reflejo de tablas)    
+│   │   ├── Usuario.java    
+│   │   ├── Venta.java  
+│   │   ├── Producto.java   
+│   │   ├── Ingrediente.java    
+│   │   ├── Receta.java 
+│   │   └── ... (resto de tablas)   
+│   │   
+│   └── Enums/                      // Enums de PostgreSQL mapeados 
+│       ├── TipoProducto.java   
+│       ├── EstadoLote.java 
+│       ├── MetodoPago.java 
+│       └── RolUsuario.java 
+│   
+├── Util/                           // Herramientas 
+│   ├── SessionManager.java         // Singleton de sesión actual   
+│   ├── Navigation.java             // Gestor de cambios de vista   
+│   ├── SecurityUtils.java          // Hashing de passwords 
+│   └── PDFGenerator.java           // Para tickets/reportes    
+│   
+└── View/                           // Archivos FXML y Assets   
+├── CSS/    
+│   ├── Style.css   
+│   └── Login.css   
+├── Images/ 
+│   └── ... 
+├── Login.fxml  
+├── MainLayout.fxml 
+├── Sidebar.fxml    
+├── Ventas/ 
+│   └── POS.fxml    
+├── Inventario/ 
+│   └── Stock.fxml  
+└── ... (resto de vistas)   
+    
+- Uso de arquitectura MVC   
+- Clases DAO (data access objets)
+- Dentro de Model también irán clases ENUM que deberán ser iguales a los ENUM de la base de datos
+

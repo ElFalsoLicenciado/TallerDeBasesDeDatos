@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="439.0" prefWidth="547.0" stylesheets="@../CSS/Style.css" styleClass="login-window" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LogIn.LogInController">
+   <children>
+      <Label alignment="CENTER" layoutX="166.0" layoutY="78.0" styleClass="titulo-cafeteria" text="Lua's Place" textAlignment="CENTER">
+         <font>
+            <Font name="Noto Sans Bold" size="34.0" />
+         </font>
+      </Label>
+      <TextField fx:id="userField" alignment="CENTER" layoutX="110.0" layoutY="188.0" prefHeight="30.0" prefWidth="328.0" promptText="Usuario" styleClass="campo-cafeteria" />
+      <PasswordField fx:id="passField" alignment="CENTER" layoutX="110.0" layoutY="262.0" prefHeight="30.0" prefWidth="328.0" promptText="Contraseña" styleClass="campo-cafeteria" />
+      <Button fx:id="continueButton" layoutX="204.0" layoutY="347.0" mnemonicParsing="false" onAction="#continuePressed" prefHeight="30.0" prefWidth="139.0" styleClass="boton-cafeteria" text="Continuar" />
+   </children>
+</AnchorPane>

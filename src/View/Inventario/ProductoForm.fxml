@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="15.0" alignment="TOP_CENTER"
+      styleClass="fondo-latte" stylesheets="/View/CSS/Style.css"
+      prefWidth="400" prefHeight="550"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="Controller.Inventario.ProductoFormController">
+
+    <padding><Insets top="20" right="30" bottom="20" left="30"/></padding>
+
+    <Label text="Nuevo Producto" styleClass="titulo-frappe"/>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="Infinity">
+        <Label text="Nombre del Producto:" styleClass="label-formulario"/>
+        <TextField fx:id="txtNombre" promptText="Ej. Pastel de Zanahoria" styleClass="campo-cafeteria"/>
+    </VBox>
+
+    <HBox spacing="15">
+        <VBox spacing="5" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <Label text="Precio Venta:" styleClass="label-formulario"/>
+            <TextField fx:id="txtPrecio" promptText="0.00" styleClass="campo-cafeteria"/>
+        </VBox>
+
+        <VBox spacing="5" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <Label text="Sabor (Opcional):" styleClass="label-formulario"/>
+            <TextField fx:id="txtSabor" promptText="Vainilla" styleClass="campo-cafeteria"/>
+        </VBox>
+    </HBox>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="Infinity">
+        <Label text="Categoría:" styleClass="label-formulario"/>
+        <ComboBox fx:id="cmbTipo" maxWidth="Infinity" promptText="Seleccione Tipo" styleClass="campo-cafeteria"/>
+    </VBox>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="Infinity">
+        <Label text="Receta Base (Requerido):" styleClass="label-formulario"/>
+        <ComboBox fx:id="cmbReceta" maxWidth="Infinity" promptText="Vincular Receta..." styleClass="campo-cafeteria"/>
+        <Label text="* El producto descontará inventario según esta receta." textFill="#7f8c8d" style="-fx-font-size: 10px;"/>
+    </VBox>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="Infinity" VBox.vgrow="ALWAYS">
+        <Label text="Descripción:" styleClass="label-formulario"/>
+        <TextArea fx:id="txtDescripcion" wrapText="true" styleClass="campo-cafeteria"/>
+    </VBox>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Cancelar" onAction="#cerrar" style="-fx-background-color: transparent; -fx-text-fill: #7f8c8d; -fx-underline: true; -fx-cursor: hand;"/>
+        <Button text="Guardar Producto" onAction="#guardar" styleClass="boton-latte" style="-fx-background-color: #27AE60;" prefWidth="150"/>
+    </HBox>
+
+</VBox>
