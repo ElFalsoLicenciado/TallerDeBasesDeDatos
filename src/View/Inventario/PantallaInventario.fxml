@@ -38,7 +38,9 @@
                     <ToggleButton fx:id="tglInsumos" text="Insumos 🌾" toggleGroup="$grupoTipo" onAction="#cambiarVista" styleClass="boton-switch"/>
                 </HBox>
 
+                <Button text="+ Nuevo" onAction="#abrirNuevoProducto" styleClass="boton-frappe" />
                 <Button onAction="#cargarInventario" text="Actualizar ⟳" styleClass="boton-cafeteria" />
+
             </HBox>
 
             <StackPane VBox.vgrow="ALWAYS">

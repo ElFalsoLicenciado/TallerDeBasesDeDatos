@@ -1,10 +1,10 @@
 package Model.DAO;
 
 import Model.DatabaseConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecetaDAO {
 
@@ -61,5 +61,21 @@ public class RecetaDAO {
         }
 
         return sb.toString();
+    }
+
+    // Helper para llenar el ComboBox de creación de productos
+    public Map<Integer, String> obtenerListaSimple() {
+        Map<Integer, String> mapa = new HashMap<>();
+        String sql = "SELECT id, nombre FROM recetas WHERE activo = TRUE ORDER BY nombre";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                mapa.put(rs.getInt("id"), rs.getString("nombre"));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return mapa;
     }
 }

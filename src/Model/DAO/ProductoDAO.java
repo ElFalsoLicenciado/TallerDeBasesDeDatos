@@ -38,4 +38,27 @@ public class ProductoDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return lista;
     }
+
+    public boolean guardar(Producto p) {
+        // El código se genera automáticamente por el trigger de la BD si no se envía
+        String sql = "INSERT INTO productos (nombre, precio, id_receta, tipo, sabor, descripcion) " +
+                "VALUES (?, ?, ?, ?::tipo_producto, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, p.getNombre());
+            ps.setDouble(2, p.getPrecio());
+            ps.setInt(3, p.getIdReceta());
+            ps.setString(4, p.getTipo()); // Debe coincidir con el ENUM ('Pan', 'Bebida'...)
+            ps.setString(5, p.getSabor());
+            ps.setString(6, p.getDescripcion());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

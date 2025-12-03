@@ -4,10 +4,12 @@ import Model.DAO.InventarioDAO;
 import Model.DAO.RecetaDAO;
 import Model.Entities.InventarioItem;
 import Model.Entities.Usuario;
+import Util.AlertUtils;
 import Util.SessionManager;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -15,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.InputStream;
 import java.util.List;
@@ -197,5 +201,32 @@ public class InventarioController {
                 }
             }
         });
+    }
+
+    @FXML
+    public void abrirNuevoProducto() {
+        try {
+            // Verificar permisos si lo deseas (ej. solo Admin/Gerente)
+            if (!SessionManager.getInstance().tienePermiso("inventario.ajustar")) {
+                AlertUtils.mostrar(Alert.AlertType.WARNING, "Acceso Denegado", "No tienes permiso para crear productos.");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Inventario/ProductoForm.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Catálogo");
+            stage.setResizable(false);
+            stage.showAndWait();
+
+            // Al cerrar, recargar para ver el nuevo producto
+            cargarInventario();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
