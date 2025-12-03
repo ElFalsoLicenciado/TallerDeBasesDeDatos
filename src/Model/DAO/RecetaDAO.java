@@ -5,6 +5,8 @@ import Model.DatabaseConnection;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import Model.Entities.RecetaDetalle; // Asumiendo que crearás esta entidad
+import Model.Entities.Ingrediente;
 
 public class RecetaDAO {
 
@@ -61,6 +63,63 @@ public class RecetaDAO {
         }
 
         return sb.toString();
+    }
+
+    public boolean guardarReceta(String nombre, String instrucciones, int tiempo, double cantidadProd, String unidad, int idUsuario, Map<Ingrediente, Double> ingredientes) {
+        Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement psReceta = null;
+        PreparedStatement psIngredientes = null;
+
+        // Generamos código automático con el trigger, no lo enviamos
+        String sqlReceta = "INSERT INTO recetas (nombre, instrucciones, tiempo_preparacion, cantidad_producida, unidad_produccion, id_usuario_creador) " +
+                "VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+
+        String sqlDetalle = "INSERT INTO recetas_ingredientes (id_receta, id_ingrediente, cantidad_requerida, orden_uso) VALUES (?, ?, ?, ?)";
+
+        try {
+            conn.setAutoCommit(false); // Iniciar transacción
+
+            // 1. Insertar Receta
+            psReceta = conn.prepareStatement(sqlReceta);
+            psReceta.setString(1, nombre);
+            psReceta.setString(2, instrucciones);
+            psReceta.setInt(3, tiempo);
+            psReceta.setDouble(4, cantidadProd);
+            psReceta.setString(5, unidad);
+            psReceta.setInt(6, idUsuario);
+
+            ResultSet rs = psReceta.executeQuery();
+            int idReceta = 0;
+            if (rs.next()) idReceta = rs.getInt(1);
+
+            // 2. Insertar Ingredientes
+            psIngredientes = conn.prepareStatement(sqlDetalle);
+            int orden = 1;
+
+            for (Map.Entry<Ingrediente, Double> entry : ingredientes.entrySet()) {
+                psIngredientes.setInt(1, idReceta);
+                psIngredientes.setInt(2, entry.getKey().getId());
+                psIngredientes.setDouble(3, entry.getValue());
+                psIngredientes.setInt(4, orden++);
+                psIngredientes.addBatch();
+            }
+
+            psIngredientes.executeBatch();
+            conn.commit(); // Confirmar
+            return true;
+
+        } catch (SQLException e) {
+            try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+                if (psReceta != null) psReceta.close();
+                if (psIngredientes != null) psIngredientes.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) { e.printStackTrace(); }
+        }
     }
 
     // Helper para llenar el ComboBox de creación de productos

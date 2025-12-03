@@ -10,7 +10,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -141,5 +146,23 @@ public class ProduccionController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void abrirNuevaReceta() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Produccion/RecetaForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Creación de Receta");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.showAndWait();
+
+            // Recargar lista al cerrar
+            initialize();
+
+        } catch (Exception e) { e.printStackTrace(); }
     }
 }

@@ -24,6 +24,8 @@
                 <font><Font name="System Bold" size="18.0" /></font>
             </Label>
 
+            <Button text="+ Nueva Receta" onAction="#abrirNuevaReceta" maxWidth="Infinity" styleClass="boton-frappe" />
+
             <ListView fx:id="listaProductos" styleClass="lista-latte" VBox.vgrow="ALWAYS"/>
         </VBox>
     </left>
