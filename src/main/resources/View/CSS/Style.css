@@ -1,0 +1,379 @@
+/* =============================================================================
+   1. CONFIGURACIÓN BASE Y COLORES GLOBALES
+   ============================================================================= */
+
+/* Fondo general para toda la aplicación (Beige "Latte") */
+.root {
+    -fx-background-color: #FFF8E7;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 16px;
+}
+
+/* Fondo específico para la ventana de log in */
+.login-window {
+    -fx-background-color: #FFFFFF; /* Blanco puro */
+}
+
+/* Clases de utilidad para fondos específicos */
+.fondo-latte {
+    -fx-background-color: #FFF8E7;
+}
+
+/* Títulos principales (Estilo Frappe) */
+.titulo-frappe, .titulo-cafeteria {
+    -fx-text-fill: #6F4E37; /* Café clásico */
+    -fx-font-family: "Playfair Display", serif; /* Fuente elegante */
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.titulo-cafeteria {
+    -fx-font-size: 42px;
+    -fx-underline: true;
+}
+
+
+/* =============================================================================
+   2. COMPONENTES DE INTERFAZ (Botones, Inputs)
+   ============================================================================= */
+
+/* --- Botones Principales (Acciones) --- */
+.boton-cafeteria, .boton-latte, .boton-frappe {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);
+}
+
+/* Botón Café Estándar (Marrón Oscuro) */
+.boton-cafeteria {
+    -fx-background-color: #6F4E37;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-font-size: 14px;
+}
+.boton-cafeteria:hover {
+    -fx-background-color: #8B5E3C; /* Más claro */
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+.boton-cafeteria:pressed {
+    -fx-background-color: #4A332A; /* Más oscuro */
+    -fx-effect: none;
+    -fx-translate-y: 1;
+}
+
+/* Botón Latte (Caramelo) */
+.boton-latte {
+    -fx-background-color: #C69C6D;
+    -fx-background-radius: 15;
+}
+.boton-latte:hover {
+    -fx-background-color: #B08555;
+}
+
+/* Botón Frappe (Mocha / Peligro o Énfasis) */
+.boton-frappe {
+    -fx-background-color: #8B5E3C;
+    -fx-background-radius: 15;
+}
+
+
+/* --- Campos de Texto (TextField, PasswordField, ComboBox) --- */
+.campo-cafeteria {
+    -fx-background-color: #FEFDF5;  /* Crema muy suave */
+    -fx-border-color: #DCC7AA;      /* Borde café con leche */
+    -fx-border-width: 1.5px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-padding: 8px 15px;
+    -fx-text-fill: #4A332A;         /* Texto Espresso */
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #A68B7C;
+}
+
+.campo-cafeteria:focused {
+    -fx-border-color: #6F4E37;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.2), 8, 0, 0, 0);
+}
+
+.campo-cafeteria:hover {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #B09B87;
+}
+
+/* Etiquetas de formularios (Spotify Style) */
+.label-formulario {
+    -fx-text-fill: #6F4E37;
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 0 0 2 0;
+}
+
+/* --- DASHBOARD (Tarjetas de Métricas) --- */
+
+.card-metric {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-padding: 20;
+    -fx-alignment: CENTER_LEFT;
+    -fx-min-width: 250px;
+}
+
+.card-metric-title {
+    -fx-text-fill: #7f8c8d; /* Gris suave */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.card-metric-value {
+    -fx-text-fill: #6F4E37; /* Café marca */
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI";
+}
+
+/* Variación para alertas (Stock bajo) */
+.card-warning .card-metric-value {
+    -fx-text-fill: #C0392B; /* Rojo */
+}
+
+
+/* =============================================================================
+   3. MÓDULOS ESPECÍFICOS
+   ============================================================================= */
+
+/* --- Sidebar (Menú Lateral) --- */
+.boton-sidebar {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    /* Truco para ocultar texto al contraer */
+    -fx-text-overrun: clip;
+    -fx-ellipsis-string: "";
+}
+
+.boton-sidebar:hover {
+    -fx-background-color: #4A332A;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+#btnLogout:hover {
+    -fx-background-color: #C0392B; /* Rojo al salir */
+    -fx-border-color: #E74C3C;
+    -fx-text-fill: white;
+}
+
+
+/* --- Inventario (Tarjetas y Estados) --- */
+.producto-card {
+    -fx-background-color: #FEFDF5;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #DCC7AA;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-padding: 15;
+    -fx-alignment: TOP-CENTER;
+    -fx-spacing: 5;
+}
+.producto-card:hover {
+    -fx-border-color: #C69C6D;
+    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.3), 8, 0, 0, 3);
+}
+
+.texto-cantidad {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4A332A;
+}
+.stock-critico { -fx-text-fill: #C0392B; } /* Rojo */
+.stock-bajo    { -fx-text-fill: #fd7c27; } /* Naranja */
+.stock-ok      { -fx-text-fill: #27AE60; } /* Verde */
+
+
+/* --- Switch de Vistas (Toggle) --- */
+.switch-container {
+    -fx-background-color: #EBE0D0;
+    -fx-background-radius: 30;
+    -fx-padding: 3;
+    -fx-spacing: 0;
+}
+
+.boton-switch {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6F4E37;
+    -fx-background-radius: 30;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-min-width: 110px;
+    -fx-alignment: CENTER;
+}
+.boton-switch:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+}
+.boton-switch:selected {
+    -fx-background-color: #C69C6D;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 4, 0, 0, 1);
+}
+
+/* =============================================================================
+   4. TABLAS DE DATOS (TableView)
+   ============================================================================= */
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #DCC7AA;
+    -fx-border-width: 1px;
+    -fx-base: #FEFDF5; /* Base crema */
+}
+
+/* Encabezados */
+.table-view .column-header-background {
+    -fx-background-color: #DCC7AA;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-background-insets: 0;
+}
+.table-view .column-header {
+    -fx-background-color: #DCC7AA;
+    -fx-border-color: #FEFDF5;
+    -fx-border-width: 0 1 0 0;
+}
+.table-view .column-header .label {
+    -fx-text-fill: #4A332A;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-alignment: CENTER-LEFT;
+}
+
+/* Celdas y Filas */
+.table-view .table-cell {
+    -fx-text-fill: #4A332A;
+    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 0 0 0 10px;
+}
+.table-row-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent;
+}
+.table-row-cell:odd {
+    -fx-background-color: #FFF8E7;
+}
+.table-row-cell:filled:selected {
+    -fx-background-color: #C69C6D;
+    -fx-background-insets: 0;
+}
+.table-row-cell:filled:selected .table-cell {
+    -fx-text-fill: white;
+}
+
+/* Placeholder (Texto cuando está vacía) */
+.table-view .placeholder .label {
+    -fx-text-fill: #7f8c8d;
+}
+
+/* Scrollbars */
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #DCC7AA;
+}
+
+/* Listas (ListView - Usado en RH) */
+.lista-latte .list-cell {
+    -fx-background-color: #FFF8E7;
+    -fx-text-fill: #4A332A;
+    -fx-padding: 10px;
+}
+.lista-latte .list-cell:filled:selected {
+    -fx-background-color: #DCC7AA;
+    -fx-text-fill: #4A332A;
+}
+
+
+/* =============================================================================
+   5. VENTANAS EMERGENTES Y ALERTAS
+   ============================================================================= */
+
+.dialog-pane {
+    -fx-background-color: #FFF8E7;
+    -fx-border-color: #6F4E37;
+    -fx-border-width: 2px;
+}
+
+.dialog-pane > .content.label {
+    -fx-text-fill: #4A332A;
+    -fx-font-size: 14px;
+    -fx-padding: 20px;
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: #DCC7AA;
+    -fx-padding: 10px;
+}
+.dialog-pane:header .header-panel .label {
+    -fx-text-fill: #6F4E37;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #C69C6D;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+.dialog-pane .button:hover {
+    -fx-background-color: #B08555;
+}
+
+
+/* =============================================================================
+   6. TEMA ESPECIAL: DARK ROAST TERMINAL (Logs/Hacker)
+   ============================================================================= */
+
+.fondo-hacker {
+    -fx-background-color: #1B1613; /* Negro Espresso */
+}
+
+.titulo-seguridad {
+    -fx-text-fill: #E74C3C;
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
+    -fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.5), 10, 0, 0, 0);
+}
+
+.subtitulo-seguridad {
+    -fx-text-fill: #7F8C8D;
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-style: italic;
+}
+
+.console-area {
+    -fx-control-inner-background: #261E19;
+    -fx-background-color: #261E19;
+    -fx-text-fill: #EBE0D0; /* Texto espuma */
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 13px;
+    -fx-border-color: #4E342E;
+    -fx-border-width: 1px;
+    -fx-highlight-fill: #C0392B;
+    -fx-highlight-text-fill: white;
+}
+
+.console-area .scroll-bar {
+    -fx-background-color: #1B1613;
+}
+.console-area .scroll-bar .thumb {
+    -fx-background-color: #5D4037;
+    -fx-background-radius: 0;
+}

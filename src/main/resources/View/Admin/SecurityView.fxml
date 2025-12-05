@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.Controller.Admin.SecurityController"
+            stylesheets="/View/CSS/SecurityStyle.css">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #FFF8E7; -fx-padding: 20 25; -fx-border-color: #DCC7AA; -fx-border-width: 0 0 1 0;">
+            <VBox>
+                <Label text="Configuración de Accesos" styleClass="titulo-frappe"/>
+                <Label text="Administra quién puede hacer qué en Luas Place" styleClass="subtitulo-latte"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="Guardar Cambios" onAction="#saveChanges"
+                    styleClass="boton-cafeteria"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="10" styleClass="roles-container-box" prefWidth="320">
+            <padding>
+                <Insets top="20" right="5" bottom="20" left="15"/>
+            </padding>
+
+            <Label text="ROLES DEL SISTEMA" style="-fx-font-weight: bold; -fx-text-fill: #C69C6D; -fx-font-size: 12px; -fx-padding: 0 0 0 5;"/>
+
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                        style="-fx-background-color: transparent; -fx-background: transparent;">
+                <VBox fx:id="rolesContainer" spacing="12" styleClass="role-list"/>
+            </ScrollPane>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 25; -fx-background-color: #FFF8E7;">
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label fx:id="lblSelectedRole" text="Selecciona un rol para editar"
+                       style="-fx-font-family: 'Playfair Display'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #4A332A;"/>
+                <Label fx:id="lblFeedback" text="" style="-fx-text-fill: #27ae60; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                <FlowPane fx:id="permissionsContainer" hgap="20" vgap="15"
+                          style="-fx-padding: 5;"/>
+            </ScrollPane>
+        </VBox>
+    </center>
+
+</BorderPane>

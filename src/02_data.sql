@@ -38,6 +38,18 @@ SELECT r.id, p.id FROM roles r, permisos p WHERE r.nombre = 'Cajero' AND p.codig
 INSERT INTO roles_permisos (id_rol, id_permiso)
 SELECT r.id, p.id FROM roles r, permisos p WHERE r.nombre = 'Produccion' AND p.codigo IN ('produccion.crear');
 
+-- Insertar el permiso de gestión de seguridad si no existe
+INSERT INTO permisos (codigo, descripcion, modulo)
+VALUES ('sys.security_manage', 'Gestionar Roles y Permisos', 'Sistema')
+    ON CONFLICT (codigo) DO NOTHING;
+
+-- Asignar este permiso al Super Admin
+INSERT INTO roles_permisos (id_rol, id_permiso)
+SELECT r.id, p.id
+FROM roles r, permisos p
+WHERE r.nombre = 'Super Admin' AND p.codigo = 'sys.security_manage'
+    ON CONFLICT DO NOTHING;
+
 -- 2. DATOS DE NEGOCIO
 INSERT INTO sucursales (nombre, ciudad, calle, colonia, numero, codigo_postal, telefono) VALUES
 ('Lua''s Place Centro', 'Morelia', 'Av. Madero Poniente', 'Centro Histórico', '453', '58000', '4433123456'),

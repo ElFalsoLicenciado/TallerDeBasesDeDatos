@@ -1,0 +1,203 @@
+/* =============================================================================
+   SECURITY STYLE - TEMA "BARISTA PRO"
+   Consistencia total con Style.css Global
+   ============================================================================= */
+
+.root {
+    -fx-background-color: #FFF8E7; /* Latte Base */
+    /* Forzamos Segoe UI para el cuerpo, pero Playfair para títulos */
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* =============================================================================
+   TIPOGRAFÍA Y TÍTULOS (Playfair Display)
+   ============================================================================= */
+
+/* Título Principal - Coincide con .titulo-frappe global */
+.titulo-frappe {
+    -fx-font-family: "Playfair Display", serif;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6F4E37; /* Café Clásico */
+    -fx-padding: 0 0 5 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.15), 0, 0, 0, 2);
+}
+
+/* Subtítulo descriptivo */
+.subtitulo-latte {
+    -fx-font-family: "Playfair Display", serif; /* También usamos Playfair aquí para elegancia */
+    -fx-font-size: 14px;
+    -fx-text-fill: #A68B7C; /* Beige Oscuro/Espuma */
+    -fx-font-style: italic;
+}
+
+/* =============================================================================
+   BOTONES (Importados del Global)
+   ============================================================================= */
+
+.boton-cafeteria {
+    -fx-background-color: #6F4E37;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", sans-serif; /* O Playfair si prefieres botones elegantes */
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);
+    -fx-padding: 10 25;
+}
+
+.boton-cafeteria:hover {
+    -fx-background-color: #8B5E3C; /* Más claro */
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.boton-cafeteria:pressed {
+    -fx-background-color: #4A332A; /* Más oscuro */
+    -fx-effect: none;
+    -fx-translate-y: 1;
+}
+
+/* =============================================================================
+   SCROLLBARS (Estilo Caramelo)
+   ============================================================================= */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+}
+.scroll-bar:vertical .track {
+    -fx-background-color: rgba(220, 199, 170, 0.3);
+    -fx-background-radius: 10;
+}
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #DCC7AA;
+    -fx-background-radius: 10;
+}
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #C69C6D;
+}
+
+/* =============================================================================
+   PANEL IZQUIERDO: ROLES (Estilo Menú)
+   ============================================================================= */
+.roles-container-box {
+    -fx-background-color: #FEFDF5;
+    -fx-border-color: #EBE0D0;
+    -fx-border-width: 0 1 0 0;
+}
+
+.role-list {
+    -fx-background-color: transparent;
+    -fx-spacing: 12;
+    -fx-padding: 10 15 10 5;
+}
+
+/* Tarjeta Inactiva */
+.role-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #DCC7AA;
+    -fx-border-width: 1px;
+    -fx-padding: 15;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(74, 51, 42, 0.08), 5, 0, 0, 3);
+    -fx-min-width: 240px;
+    -fx-transition: all 0.2s;
+}
+.role-card:hover {
+    -fx-translate-x: 2;
+    -fx-border-color: #C69C6D;
+}
+
+/* Tarjeta Seleccionada (Dark Roast) */
+.role-card.selected {
+    -fx-background-color: #6F4E37;
+    -fx-border-color: #4A332A;
+    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.4), 8, 0, 0, 4);
+}
+
+/* Textos dentro de tarjeta */
+.role-name {
+    -fx-font-family: "Segoe UI"; /* Nombre legible */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6F4E37;
+}
+.role-desc {
+    -fx-font-size: 12px;
+    -fx-text-fill: #A68B7C;
+}
+
+.role-card.selected .role-name { -fx-text-fill: #FFFFFF; }
+.role-card.selected .role-desc { -fx-text-fill: #EBE0D0; }
+
+
+/* =============================================================================
+   PANEL DERECHO: TOGGLES (Barista Style)
+   ============================================================================= */
+.toggle-switch {
+    -fx-padding: 8;
+    -fx-background-color: transparent;
+    -fx-text-fill: #4A332A;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+}
+.toggle-switch > .box {
+    -fx-background-color: #EBE0D0;
+    -fx-background-radius: 6;
+    -fx-min-width: 54px;
+    -fx-max-width: 54px;
+    -fx-min-height: 26px;
+    -fx-max-height: 26px;
+    -fx-padding: 3;
+    -fx-alignment: CENTER_LEFT;
+    -fx-effect: inner-shadow(gaussian, rgba(0,0,0,0.15), 3, 0, 0, 1);
+    -fx-border-color: #DCC7AA;
+    -fx-border-radius: 6;
+}
+.toggle-switch > .box > .mark {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 4;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);
+}
+
+/* Estado ACTIVADO */
+.toggle-switch:selected > .box {
+    -fx-background-color: #C69C6D; /* Caramelo */
+    -fx-alignment: CENTER_RIGHT;
+    -fx-effect: none;
+    -fx-border-color: #B08555;
+}
+.toggle-switch:hover > .box {
+    -fx-border-color: #6F4E37;
+}
+
+/* Fila de Permiso (Contiene el Botón y el Texto) */
+.permission-row {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 8;
+    -fx-border-color: #EBE0D0;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 3, 0, 0, 1);
+}
+
+.permission-row:hover {
+    -fx-border-color: #DCC7AA;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
