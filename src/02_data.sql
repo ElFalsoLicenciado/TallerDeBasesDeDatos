@@ -30,7 +30,7 @@ SELECT r.id, p.id FROM roles r, permisos p WHERE r.nombre = 'Super Admin' AND p.
 
 INSERT INTO roles_permisos (id_rol, id_permiso)
 SELECT r.id, p.id FROM roles r, permisos p WHERE r.nombre = 'Gerente Sucursal'
-                                             AND p.codigo IN ('ventas.ver_reportes', 'inventario.ajustar', 'usuarios.ver', 'inventario.merma', 'ventas.crear');
+                                             AND p.codigo IN ('ventas.ver_reportes', 'inventario.ajustar', 'usuarios.ver', 'inventario.merma', 'ventas.crear', 'produccion.crear');
 
 INSERT INTO roles_permisos (id_rol, id_permiso)
 SELECT r.id, p.id FROM roles r, permisos p WHERE r.nombre = 'Cajero' AND p.codigo IN ('ventas.crear');

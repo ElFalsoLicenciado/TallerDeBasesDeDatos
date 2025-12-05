@@ -37,7 +37,7 @@
             text="   Inicio">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image> <Image url="/View/Images/home.png" /> </image>
+                <image> <Image url="/View/Images/claro/home.png" /> </image>
             </ImageView>
         </graphic>
     </Button>
@@ -51,7 +51,7 @@
             text="   Punto de Venta">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image> <Image url="/View/Images/ventas.png" /> </image>
+                <image> <Image url="/View/Images/claro/ventas.png" /> </image>
             </ImageView>
         </graphic>
     </Button>
@@ -64,7 +64,7 @@
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="/View/Images/compras.png" />
+                    <Image url="/View/Images/claro/compras.png" />
                 </image>
             </ImageView>
         </graphic>
@@ -77,7 +77,7 @@
             text="   Cocina / Producción">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image> <Image url="/View/Images/produccion.png" /> </image>
+                <image> <Image url="/View/Images/claro/produccion.png" /> </image>
             </ImageView>
         </graphic>
     </Button>
@@ -89,7 +89,7 @@
             text="   Inventario">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image> <Image url="/View/Images/inventario.png" /> </image>
+                <image> <Image url="/View/Images/claro/inventario.png" /> </image>
             </ImageView>
         </graphic>
     </Button>
@@ -101,7 +101,7 @@
             text="   RRHH">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image> <Image url="/View/Images/RRHH.png" /> </image>
+                <image> <Image url="/View/Images/claro/RRHH.png" /> </image>
             </ImageView>
         </graphic>
     </Button>
@@ -127,7 +127,7 @@
             text="   Auditoría / Logs">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image> <Image url="/View/Images/logs.png" /> </image>
+                <image> <Image url="/View/Images/claro/logs.png" /> </image>
             </ImageView>
         </graphic>
     </Button>
@@ -140,7 +140,7 @@
             text="   Seguridad / Roles">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image> <Image url="/View/Images/security.png" /> </image>
+                <image> <Image url="/View/Images/claro/security.png" /> </image>
             </ImageView>
         </graphic>
     </Button>
@@ -152,7 +152,7 @@
             text="   Cerrar Sesión">
         <graphic>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                <image> <Image url="/View/Images/logout.png" /> </image>
+                <image> <Image url="/View/Images/claro/logout.png" /> </image>
             </ImageView>
         </graphic>
     </Button>

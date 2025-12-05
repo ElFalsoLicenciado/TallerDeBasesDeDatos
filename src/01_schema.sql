@@ -446,3 +446,33 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_venta AFTER INSERT ON detalles_ventas FOR EACH ROW EXECUTE FUNCTION actualizar_inventario_venta();
+
+-- 1. Función para sumar al inventario cuando se crea un lote
+CREATE OR REPLACE FUNCTION actualizar_stock_produccion()
+    RETURNS TRIGGER AS $$
+BEGIN
+    -- Verificamos si ya existe el registro en inventario para esa sucursal/producto
+    IF EXISTS (SELECT 1 FROM inventario_sucursales WHERE id_sucursal = NEW.id_sucursal AND id_producto = NEW.id_producto) THEN
+        -- Si existe, sumamos
+        UPDATE inventario_sucursales
+        SET cantidad_disponible = cantidad_disponible + NEW.cantidad_producida,
+            fecha_actualizacion = CURRENT_TIMESTAMP
+        WHERE id_sucursal = NEW.id_sucursal AND id_producto = NEW.id_producto;
+    ELSE
+        -- Si no existe (producto nuevo en esa sucursal), lo insertamos
+        INSERT INTO inventario_sucursales (id_sucursal, id_producto, cantidad_disponible, cantidad_minima)
+        VALUES (NEW.id_sucursal, NEW.id_producto, NEW.cantidad_producida, 5);
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- 2. El Trigger que dispara la función
+-- Se activa cada vez que insertas un registro en 'lotes_produccion'
+DROP TRIGGER IF EXISTS trg_produccion ON lotes_produccion;
+
+CREATE TRIGGER trg_produccion
+    AFTER INSERT ON lotes_produccion
+    FOR EACH ROW
+EXECUTE FUNCTION actualizar_stock_produccion();

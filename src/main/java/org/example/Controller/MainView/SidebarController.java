@@ -87,7 +87,7 @@ public class SidebarController {
 
         // 6. SERVER LOGS
         if (btnLogs != null) {
-            if (sesion.tienePermiso("sys.full_access")) {
+            if (sesion.tienePermiso("sys.full_access") || sesion.tienePermiso("reportes.auditoria")) {
                 btnLogs.setVisible(true);
                 btnLogs.setManaged(true);
             } else {

@@ -141,6 +141,37 @@
     -fx-text-fill: #C0392B; /* Rojo */
 }
 
+/* --- BOTONES DE ACCESO RÁPIDO (HOME) --- */
+.quick-action-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #EBE0D0; /* Borde sutil */
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+
+    -fx-min-width: 140px;
+    -fx-min-height: 110px;
+    -fx-pref-width: 140px;
+    -fx-pref-height: 110px;
+
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6F4E37; /* Café Texto */
+    -fx-alignment: CENTER;
+    -fx-content-display: TOP; /* Icono arriba, texto abajo */
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 10;
+}
+
+.quick-action-card:hover {
+    -fx-background-color: #FFF8E7; /* Fondo Latte */
+    -fx-border-color: #C69C6D;      /* Borde Caramelo */
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(three-pass-box, rgba(111, 78, 55, 0.15), 8, 0, 0, 2);
+}
 
 /* =============================================================================
    3. MÓDULOS ESPECÍFICOS
@@ -166,8 +197,8 @@
 }
 
 #btnLogout:hover {
-    -fx-background-color: #C0392B; /* Rojo al salir */
-    -fx-border-color: #E74C3C;
+    -fx-background-color: #a8272c; /* Rojo al salir */
+    -fx-border-color: #bb3326;
     -fx-text-fill: white;
 }
 

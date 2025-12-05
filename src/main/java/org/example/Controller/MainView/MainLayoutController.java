@@ -3,7 +3,8 @@ package org.example.Controller.MainView;
 import org.example.Util.AlertUtils;
 import org.example.Util.Navigation;
 import org.example.Util.SessionManager;
-import javafx.animation.PauseTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,62 +23,92 @@ public class MainLayoutController {
 
     @FXML private BorderPane mainContainer;
 
-    private PauseTransition timerInactividad;
+    // Usamos Timeline en lugar de PauseTransition para un chequeo periódico
+    private Timeline loopVerificacion;
+    private long ultimaActividadMillis;
+
+    // Configuración del tiempo (90 segundos * 1000 ms)
+    private static final long TIEMPO_LIMITE_MS = 90 * 1000;
 
     @FXML
     public void initialize() {
         Navigation.setMainLayout(mainContainer);
         Navigation.cambiarVista("/View/Home.fxml");
 
-        iniciarTimerInactividad();
+        // 1. Inicializamos la marca de tiempo actual
+        ultimaActividadMillis = System.currentTimeMillis();
 
+        // 2. Configurar el listener de la escena
+        // Es vital esperar a que la escena exista para agregar el filtro global
         mainContainer.sceneProperty().addListener((obsScene, oldScene, newScene) -> {
             if (newScene != null) {
+                setupActivityListener(newScene);
+
+                // Listener para la ventana (para detener el timer si cierran la app)
                 newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
                     if (newWindow != null) {
-                        // Cuando la ventana se oculte o cierre (por LogOut manual o X), detenemos el timer
-                        newWindow.setOnHiding(event -> {
-                            System.out.println("DEBUG: Ventana cerrándose, deteniendo timer de inactividad.");
-                            if (timerInactividad != null) {
-                                timerInactividad.stop();
-                            }
-                        });
+                        newWindow.setOnHiding(event -> detenerTimer());
                     }
                 });
             }
         });
+
+        // 3. Iniciar el ciclo de verificación
+        iniciarCicloVerificacion();
     }
 
-    private void iniciarTimerInactividad() {
-        // 90 segundos = 1.5 minutos
-        timerInactividad = new PauseTransition(Duration.seconds(900));
-        timerInactividad.setOnFinished(event -> cerrarSesionPorTimeout());
-
-        mainContainer.addEventFilter(InputEvent.ANY, event -> reiniciarTimer());
-
-        timerInactividad.play();
+    /**
+     * Agrega el filtro de eventos a la ESCENA completa.
+     * Esto detecta actividad en cualquier parte de la ventana, incluyendo popups.
+     */
+    private void setupActivityListener(Scene scene) {
+        // InputEvent.ANY captura mouse, teclado, toques, etc.
+        scene.addEventFilter(InputEvent.ANY, event -> {
+            // Actualizamos la variable. Es una operación muy ligera (barata)
+            // a diferencia de reiniciar una animación.
+            ultimaActividadMillis = System.currentTimeMillis();
+        });
     }
 
-    private void reiniciarTimer() {
-        if (timerInactividad != null) {
-            timerInactividad.playFromStart();
+    /**
+     * Crea un ciclo infinito que revisa cada 1 segundo si ya expiró el tiempo.
+     */
+    private void iniciarCicloVerificacion() {
+        // Revisamos cada 1 segundo
+        loopVerificacion = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            long tiempoActual = System.currentTimeMillis();
+
+            // Si la diferencia entre ahora y la última actividad es mayor al límite...
+            if ((tiempoActual - ultimaActividadMillis) > TIEMPO_LIMITE_MS) {
+                cerrarSesionPorTimeout();
+            }
+        }));
+
+        loopVerificacion.setCycleCount(Timeline.INDEFINITE);
+        loopVerificacion.play();
+    }
+
+    private void detenerTimer() {
+        if (loopVerificacion != null) {
+            System.out.println("DEBUG: Deteniendo monitor de inactividad.");
+            loopVerificacion.stop();
         }
     }
 
     private void cerrarSesionPorTimeout() {
-        // --- DOBLE VERIFICACIÓN DE SEGURIDAD ---
-        // Si el usuario ya es null (ya se salió), no hacemos nada.
+        // --- DOBLE VERIFICACIÓN ---
         if (SessionManager.getInstance().getUsuarioActual() == null) {
-            if (timerInactividad != null) timerInactividad.stop();
+            detenerTimer();
             return;
         }
 
+        // Ejecutar en el hilo de UI
         Platform.runLater(() -> {
             System.out.println("⚠️ TIEMPO DE ESPERA AGOTADO: Cerrando sesión...");
 
             try {
-                // 1. Detener el timer para siempre
-                if (timerInactividad != null) timerInactividad.stop();
+                // 1. Detener el ciclo
+                detenerTimer();
 
                 // 2. Limpiar sesión
                 SessionManager.getInstance().logout();
@@ -90,8 +121,7 @@ public class MainLayoutController {
                 // 4. Abrir Login
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LogIn/LogIn.fxml"));
                 Parent root = loader.load();
-
-                Image icon = new Image("/View/Images/icon.png");
+                Image icon = new Image(getClass().getResourceAsStream("/View/Images/icon.png")); // Ajuste ruta segura
 
                 Stage loginStage = new Stage();
                 loginStage.setScene(new Scene(root));
@@ -100,6 +130,7 @@ public class MainLayoutController {
                 loginStage.setResizable(false);
                 loginStage.show();
 
+                // Mostrar alerta
                 AlertUtils.mostrar(Alert.AlertType.WARNING,
                         "Sesión Caducada",
                         "Tu sesión se ha cerrado automáticamente por inactividad.");
